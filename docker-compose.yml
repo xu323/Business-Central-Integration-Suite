@@ -1,0 +1,73 @@
+version: "3.9"
+
+# ===========================================================
+# Business Central Integration Suite - Docker Compose
+# 用法：
+#   docker compose up --build         # 啟動所有服務
+#   docker compose down               # 停止
+#   docker compose logs -f api        # 看 backend log
+# ===========================================================
+
+services:
+  api:
+    build:
+      context: ./apps/api
+      dockerfile: Dockerfile
+    container_name: bcsuite-api
+    environment:
+      APP_ENV: production
+      APP_PORT: 8000
+      DATABASE_URL: postgresql+psycopg2://bcsuite:bcsuite@db:5432/bcsuite
+      CORS_ALLOW_ORIGINS: http://localhost:5173,http://localhost:3000
+      BC_MODE: ${BC_MODE:-mock}
+      BC_BASE_URL: ${BC_BASE_URL:-}
+      BC_TENANT_ID: ${BC_TENANT_ID:-}
+      BC_ENVIRONMENT: ${BC_ENVIRONMENT:-Production}
+      BC_COMPANY_ID: ${BC_COMPANY_ID:-}
+      BC_CLIENT_ID: ${BC_CLIENT_ID:-}
+      BC_CLIENT_SECRET: ${BC_CLIENT_SECRET:-}
+      HIGH_RISK_THRESHOLD: ${HIGH_RISK_THRESHOLD:-100000}
+      SECRET_KEY: ${SECRET_KEY:-change-me-in-production}
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; urllib.request.urlopen('http://localhost:8000/health'); sys.exit(0)"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  web:
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile
+      args:
+        VITE_API_BASE_URL: http://localhost:8000
+    container_name: bcsuite-web
+    ports:
+      - "5173:80"
+    depends_on:
+      - api
+
+  db:
+    image: postgres:16-alpine
+    container_name: bcsuite-db
+    environment:
+      POSTGRES_USER: bcsuite
+      POSTGRES_PASSWORD: bcsuite
+      POSTGRES_DB: bcsuite
+    ports:
+      - "5432:5432"
+    volumes:
+      - bcsuite-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bcsuite -d bcsuite"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  bcsuite-db-data:

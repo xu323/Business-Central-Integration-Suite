@@ -1,0 +1,69 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+.env
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+htmlcov/
+.coverage
+coverage.xml
+*.egg-info/
+dist/
+build/
+
+# --- Node / React ---
+node_modules/
+.pnpm-store/
+.parcel-cache/
+.cache/
+.next/
+out/
+.vite/
+dist/
+build/
+*.local
+
+# --- IDE ---
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
+.idea/
+*.swp
+*.swo
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- AL / BC ---
+*.app
+.alpackages/
+.alcache/
+.altemplates/
+launch.json.bak
+rad.json
+*.snapshot
+
+# --- SQLite (local dev DB) ---
+*.db
+*.db-journal
+apps/api/*.db
+apps/api/data/
+
+# --- Docker / Logs ---
+*.log
+logs/
+.docker/
+
+# --- Secrets ---
+*.pem
+*.key
+.secrets/

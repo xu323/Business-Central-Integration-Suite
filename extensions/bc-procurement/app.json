@@ -1,0 +1,32 @@
+{
+  "id": "f4d3a210-9c2b-4d1e-b3aa-7c1c0f2d8e10",
+  "name": "BC Procurement Approval",
+  "publisher": "xu323",
+  "version": "1.0.0.0",
+  "brief": "Purchase request and approval workflow extension for Business Central.",
+  "description": "Adds a streamlined Purchase Request → Approval → Sync flow on top of Microsoft Dynamics 365 Business Central. Used as the AL surface of the Business-Central-Integration-Suite portfolio project.",
+  "privacyStatement": "https://example.com/privacy",
+  "EULA": "https://example.com/eula",
+  "help": "https://github.com/xu323/Business-Central-Integration-Suite",
+  "url": "https://github.com/xu323/Business-Central-Integration-Suite",
+  "logo": "",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "23.0.0.0",
+  "application": "23.0.0.0",
+  "idRanges": [
+    {
+      "from": 50100,
+      "to": 50199
+    }
+  ],
+  "contextSensitiveHelpUrl": "https://github.com/xu323/Business-Central-Integration-Suite",
+  "showMyCode": true,
+  "runtime": "12.0",
+  "features": ["NoImplicitWith"],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": true,
+    "includeSourceInSymbolFile": true
+  }
+}
