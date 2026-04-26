@@ -1,13 +1,15 @@
 import { useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Link, useSearchParams } from "react-router-dom";
+
+import { EmptyState } from "@/components/EmptyState";
+import { Spinner } from "@/components/Spinner";
+import { HighRiskBadge, StatusBadge } from "@/components/StatusBadge";
 import { api } from "@/lib/api";
 import { formatCurrency, formatDate } from "@/lib/format";
-import { HighRiskBadge, StatusBadge } from "@/components/StatusBadge";
-import { Spinner } from "@/components/Spinner";
-import { EmptyState } from "@/components/EmptyState";
 import type { PurchaseRequest, RequestStatus } from "@/types";
 
-const STATUSES: (RequestStatus | "All")[] = [
+const STATUS_OPTIONS: (RequestStatus | "All")[] = [
   "All",
   "Draft",
   "Submitted",
@@ -17,6 +19,7 @@ const STATUSES: (RequestStatus | "All")[] = [
 ];
 
 export function RequestListPage() {
+  const { t } = useTranslation();
   const [params, setParams] = useSearchParams();
   const [requests, setRequests] = useState<PurchaseRequest[]>([]);
   const [loading, setLoading] = useState(true);
@@ -54,33 +57,37 @@ export function RequestListPage() {
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-xl font-semibold text-slate-800">Purchase Requests</h2>
+          <h2 className="text-xl font-semibold text-slate-800">{t("requestList.title")}</h2>
           <p className="text-sm text-slate-500 mt-1">
-            {requests.length} requests · total {formatCurrency(total)}
+            {t("requestList.summary", {
+              count: requests.length,
+              amount: formatCurrency(total),
+            })}
           </p>
         </div>
         <Link to="/requests/new" className="btn-primary">
-          ➕ New Request
+          {t("requestList.newRequest")}
         </Link>
       </div>
 
       <div className="card p-4 flex flex-wrap gap-3 items-end">
         <div className="flex-1 min-w-[200px]">
-          <label className="label">Search</label>
+          <label className="label">{t("requestList.searchLabel")}</label>
           <form onSubmit={onSearch}>
             <input
               className="input"
-              placeholder="Description / vendor / requester"
+              placeholder={t("requestList.searchPlaceholder")}
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />
           </form>
         </div>
         <div>
-          <label className="label">Status</label>
+          <label className="label">{t("requestList.statusLabel")}</label>
           <div className="flex gap-1 flex-wrap">
-            {STATUSES.map((s) => {
+            {STATUS_OPTIONS.map((s) => {
               const active = (s === "All" && !status) || s === status;
+              const label = s === "All" ? t("status.all") : t(`status.${s}`);
               return (
                 <button
                   key={s}
@@ -97,7 +104,7 @@ export function RequestListPage() {
                       : "bg-white border-slate-200 text-slate-600 hover:border-brand-400"
                   }`}
                 >
-                  {s}
+                  {label}
                 </button>
               );
             })}
@@ -109,14 +116,16 @@ export function RequestListPage() {
         {loading ? (
           <Spinner />
         ) : error ? (
-          <div className="p-6 text-rose-700 bg-rose-50">{error}</div>
+          <div className="p-6 text-rose-700 bg-rose-50">
+            {t("requestList.loadError", { message: error })}
+          </div>
         ) : requests.length === 0 ? (
           <EmptyState
-            title="No requests yet"
-            description="Create your first purchase request to start the approval workflow."
+            title={t("requestList.empty.title")}
+            description={t("requestList.empty.description")}
             action={
               <Link to="/requests/new" className="btn-primary">
-                ➕ Create Request
+                {t("requestList.empty.cta")}
               </Link>
             }
           />
@@ -124,14 +133,14 @@ export function RequestListPage() {
           <table className="w-full text-sm">
             <thead className="bg-slate-50 text-slate-600 text-xs uppercase tracking-wide">
               <tr>
-                <th className="text-left px-4 py-3 font-medium">Number</th>
-                <th className="text-left px-4 py-3 font-medium">Description</th>
-                <th className="text-left px-4 py-3 font-medium">Vendor</th>
-                <th className="text-right px-4 py-3 font-medium">Amount</th>
-                <th className="text-left px-4 py-3 font-medium">Status</th>
-                <th className="text-left px-4 py-3 font-medium">Risk</th>
-                <th className="text-left px-4 py-3 font-medium">Created</th>
-                <th className="text-right px-4 py-3 font-medium">Actions</th>
+                <th className="text-left px-4 py-3 font-medium">{t("requestList.columns.number")}</th>
+                <th className="text-left px-4 py-3 font-medium">{t("requestList.columns.description")}</th>
+                <th className="text-left px-4 py-3 font-medium">{t("requestList.columns.vendor")}</th>
+                <th className="text-right px-4 py-3 font-medium">{t("requestList.columns.amount")}</th>
+                <th className="text-left px-4 py-3 font-medium">{t("requestList.columns.status")}</th>
+                <th className="text-left px-4 py-3 font-medium">{t("requestList.columns.risk")}</th>
+                <th className="text-left px-4 py-3 font-medium">{t("requestList.columns.created")}</th>
+                <th className="text-right px-4 py-3 font-medium">{t("requestList.columns.actions")}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
@@ -149,15 +158,10 @@ export function RequestListPage() {
                   <td className="px-4 py-3">
                     <HighRiskBadge value={r.high_risk} />
                   </td>
-                  <td className="px-4 py-3 text-slate-500 text-xs">
-                    {formatDate(r.created_at)}
-                  </td>
+                  <td className="px-4 py-3 text-slate-500 text-xs">{formatDate(r.created_at)}</td>
                   <td className="px-4 py-3 text-right">
-                    <Link
-                      to={`/requests/${r.id}`}
-                      className="text-brand-600 hover:underline text-sm"
-                    >
-                      View →
+                    <Link to={`/requests/${r.id}`} className="text-brand-600 hover:underline text-sm">
+                      {t("requestList.rowAction")}
                     </Link>
                   </td>
                 </tr>

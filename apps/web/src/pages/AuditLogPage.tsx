@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+
+import { EmptyState } from "@/components/EmptyState";
+import { Spinner } from "@/components/Spinner";
+import { SyncStatusBadge } from "@/components/StatusBadge";
 import { api } from "@/lib/api";
 import { formatDate } from "@/lib/format";
-import { SyncStatusBadge } from "@/components/StatusBadge";
-import { Spinner } from "@/components/Spinner";
-import { EmptyState } from "@/components/EmptyState";
 import type { AuditLog } from "@/types";
 
 export function AuditLogPage() {
+  const { t } = useTranslation();
   const [logs, setLogs] = useState<AuditLog[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string>("");
@@ -22,29 +25,29 @@ export function AuditLogPage() {
   return (
     <div className="space-y-4">
       <div>
-        <h2 className="text-xl font-semibold text-slate-800">Audit Logs</h2>
-        <p className="text-sm text-slate-500 mt-1">
-          Every workflow event and BC sync attempt is captured here.
-        </p>
+        <h2 className="text-xl font-semibold text-slate-800">{t("audit.title")}</h2>
+        <p className="text-sm text-slate-500 mt-1">{t("audit.subtitle")}</p>
       </div>
 
       <div className="card overflow-hidden">
         {loading ? (
           <Spinner />
         ) : error ? (
-          <div className="p-6 text-rose-700 bg-rose-50">{error}</div>
+          <div className="p-6 text-rose-700 bg-rose-50">
+            {t("audit.loadError", { message: error })}
+          </div>
         ) : logs.length === 0 ? (
-          <EmptyState title="No audit logs yet" icon="📜" />
+          <EmptyState title={t("audit.empty")} icon="📜" />
         ) : (
           <table className="w-full text-sm">
             <thead className="bg-slate-50 text-xs uppercase tracking-wide text-slate-600">
               <tr>
-                <th className="text-left px-4 py-3 font-medium">Time</th>
-                <th className="text-left px-4 py-3 font-medium">Actor</th>
-                <th className="text-left px-4 py-3 font-medium">Action</th>
-                <th className="text-left px-4 py-3 font-medium">Target</th>
-                <th className="text-left px-4 py-3 font-medium">Sync</th>
-                <th className="text-left px-4 py-3 font-medium">Error</th>
+                <th className="text-left px-4 py-3 font-medium">{t("audit.columns.time")}</th>
+                <th className="text-left px-4 py-3 font-medium">{t("audit.columns.actor")}</th>
+                <th className="text-left px-4 py-3 font-medium">{t("audit.columns.action")}</th>
+                <th className="text-left px-4 py-3 font-medium">{t("audit.columns.target")}</th>
+                <th className="text-left px-4 py-3 font-medium">{t("audit.columns.sync")}</th>
+                <th className="text-left px-4 py-3 font-medium">{t("audit.columns.error")}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">

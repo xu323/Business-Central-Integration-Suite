@@ -1,0 +1,197 @@
+{
+  "common": {
+    "loading": "読み込み中…",
+    "cancel": "キャンセル",
+    "saving": "保存中…",
+    "save": "保存",
+    "delete": "削除",
+    "remove": "削除",
+    "view": "表示",
+    "back": "戻る",
+    "ok": "OK",
+    "actions": "操作",
+    "total": "合計",
+    "viewArrow": "詳細 →",
+    "viewAllArrow": "すべて表示 →",
+    "search": "検索",
+    "errorPrefix": "エラー"
+  },
+  "language": {
+    "label": "言語",
+    "switcherTitle": "言語を切り替える",
+    "zh-TW": "繁體中文",
+    "en": "English",
+    "ja": "日本語"
+  },
+  "app": {
+    "title": "Business Central 統合スイート",
+    "subtitle": "購買承認 & API 統合ハブ",
+    "console": {
+      "tag": "BC Suite",
+      "title": "統合管理コンソール"
+    },
+    "footer": "v1.0 · MSP デモ"
+  },
+  "nav": {
+    "dashboard": "ダッシュボード",
+    "requests": "購買依頼",
+    "createRequest": "依頼を作成",
+    "auditLogs": "監査ログ"
+  },
+  "topbar": {
+    "apiHealthy": "API 正常",
+    "apiDown": "API ダウン",
+    "bcModeLabel": "BC"
+  },
+  "status": {
+    "all": "すべて",
+    "Draft": "下書き",
+    "Submitted": "申請中",
+    "Approved": "承認済",
+    "Rejected": "却下",
+    "Synced": "同期済"
+  },
+  "syncStatus": {
+    "Pending": "保留中",
+    "Success": "成功",
+    "Failed": "失敗"
+  },
+  "highRisk": {
+    "badge": "⚠ 高リスク",
+    "tag": "高リスク"
+  },
+  "dashboard": {
+    "title": "概要",
+    "subtitle": "購買・承認パイプラインの一覧。",
+    "newRequest": "➕ 新規依頼",
+    "totalRequests": "依頼総数",
+    "highRiskApprovals": "高リスク承認",
+    "openAmount": "未確定金額",
+    "syncedAmount": "同期済金額",
+    "byStatus": "ステータス別",
+    "syncHealth": "同期状態",
+    "recentFailures": "直近 7 日の失敗",
+    "syncedDocuments": "同期済ドキュメント",
+    "viewAuditLogs": "監査ログを見る →",
+    "loadFailed": "ダッシュボードの読み込みに失敗しました：{{message}}"
+  },
+  "requestList": {
+    "title": "購買依頼",
+    "summary": "依頼 {{count}} 件 · 合計 {{amount}}",
+    "newRequest": "➕ 新規依頼",
+    "searchLabel": "検索",
+    "searchPlaceholder": "説明 / 仕入先 / 依頼者",
+    "statusLabel": "ステータス",
+    "columns": {
+      "number": "番号",
+      "description": "説明",
+      "vendor": "仕入先",
+      "amount": "金額",
+      "status": "ステータス",
+      "risk": "リスク",
+      "created": "作成日時",
+      "actions": "操作"
+    },
+    "rowAction": "詳細 →",
+    "empty": {
+      "title": "依頼はまだありません",
+      "description": "最初の購買依頼を作成して承認フローを開始してください。",
+      "cta": "➕ 依頼を作成"
+    },
+    "loadError": "読み込みに失敗しました：{{message}}"
+  },
+  "create": {
+    "title": "購買依頼を作成",
+    "subtitle": "下書きとして保存してから承認に提出します。",
+    "fields": {
+      "description": "説明",
+      "requiredDate": "必要日",
+      "requester": "依頼者",
+      "department": "部署",
+      "vendorNo": "仕入先番号",
+      "vendorName": "仕入先名",
+      "currency": "通貨"
+    },
+    "placeholders": {
+      "description": "例：第2四半期 オフィスノート PC",
+      "itemNo": "ITEM-XXX"
+    },
+    "lines": "明細",
+    "addLine": "➕ 明細を追加",
+    "lineColumns": {
+      "itemNo": "品目番号",
+      "description": "説明",
+      "quantity": "数量",
+      "uom": "単位",
+      "unitPrice": "単価",
+      "amount": "金額"
+    },
+    "total": "合計",
+    "remove": "削除",
+    "cancel": "キャンセル",
+    "saveDraft": "下書きとして保存",
+    "saving": "保存中…",
+    "submitError": "作成に失敗しました：{{message}}"
+  },
+  "detail": {
+    "back": "← 一覧に戻る",
+    "total": "合計",
+    "fields": {
+      "requester": "依頼者",
+      "department": "部署",
+      "vendor": "仕入先",
+      "documentDate": "伝票日付",
+      "requiredDate": "必要日",
+      "currency": "通貨",
+      "submittedAt": "提出日時",
+      "approver": "承認者",
+      "decidedAt": "決定日時",
+      "bcDocumentId": "BC 伝票 ID",
+      "syncedAt": "同期日時",
+      "comment": "コメント"
+    },
+    "lines": "明細",
+    "lineColumns": {
+      "item": "品目",
+      "description": "説明",
+      "qty": "数量",
+      "unitPrice": "単価",
+      "amount": "金額"
+    },
+    "workflowActions": "ワークフロー操作",
+    "actor": "操作者",
+    "comment": "コメント",
+    "submit": "📨 提出",
+    "approve": "✓ 承認",
+    "reject": "✗ 却下",
+    "syncToBC": "🔄 Business Central に同期",
+    "delete": "削除",
+    "deleteConfirm": "この依頼を削除しますか？",
+    "transitionsHint": "許可される遷移：下書き → 申請中 →（承認済 | 却下）→ 同期済。",
+    "auditTrail": "監査履歴",
+    "noAuditEntries": "監査ログはまだありません。",
+    "auditColumns": {
+      "time": "時刻",
+      "actor": "操作者",
+      "action": "動作",
+      "sync": "同期",
+      "error": "エラー"
+    },
+    "actionError": "操作に失敗しました：{{message}}",
+    "loadError": "読み込みに失敗しました：{{message}}"
+  },
+  "audit": {
+    "title": "監査ログ",
+    "subtitle": "すべてのワークフローイベントと BC 同期の試行を記録します。",
+    "columns": {
+      "time": "時刻",
+      "actor": "操作者",
+      "action": "動作",
+      "target": "対象",
+      "sync": "同期",
+      "error": "エラー"
+    },
+    "empty": "監査ログはまだありません",
+    "loadError": "読み込みに失敗しました：{{message}}"
+  }
+}

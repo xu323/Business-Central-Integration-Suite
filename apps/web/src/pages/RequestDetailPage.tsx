@@ -1,12 +1,15 @@
 import { useCallback, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Link, useNavigate, useParams } from "react-router-dom";
+
+import { Spinner } from "@/components/Spinner";
+import { HighRiskBadge, StatusBadge, SyncStatusBadge } from "@/components/StatusBadge";
 import { api } from "@/lib/api";
 import { formatCurrency, formatDate } from "@/lib/format";
-import { HighRiskBadge, StatusBadge, SyncStatusBadge } from "@/components/StatusBadge";
-import { Spinner } from "@/components/Spinner";
 import type { AuditLog, PurchaseRequest } from "@/types";
 
 export function RequestDetailPage() {
+  const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [request, setRequest] = useState<PurchaseRequest | null>(null);
@@ -57,7 +60,7 @@ export function RequestDetailPage() {
           await api.syncRequest(request.id);
           break;
         case "delete":
-          if (!confirm("Delete this request?")) {
+          if (!confirm(t("detail.deleteConfirm"))) {
             setBusy("");
             return;
           }
@@ -75,7 +78,11 @@ export function RequestDetailPage() {
 
   if (loading) return <Spinner />;
   if (error && !request) {
-    return <div className="card p-6 border-rose-200 bg-rose-50 text-rose-700">{error}</div>;
+    return (
+      <div className="card p-6 border-rose-200 bg-rose-50 text-rose-700">
+        {t("detail.loadError", { message: error })}
+      </div>
+    );
   }
   if (!request) return null;
 
@@ -89,7 +96,7 @@ export function RequestDetailPage() {
       <div className="flex items-center justify-between">
         <div>
           <Link to="/requests" className="text-xs text-brand-600 hover:underline">
-            ← Back to list
+            {t("detail.back")}
           </Link>
           <h2 className="text-xl font-semibold text-slate-800 mt-1 flex items-center gap-3">
             {request.number}
@@ -99,7 +106,7 @@ export function RequestDetailPage() {
           <p className="text-sm text-slate-500 mt-1">{request.description}</p>
         </div>
         <div className="text-right">
-          <div className="text-xs text-slate-500">Total</div>
+          <div className="text-xs text-slate-500">{t("detail.total")}</div>
           <div className="text-2xl font-semibold text-slate-800">
             {formatCurrency(request.total_amount, request.currency_code)}
           </div>
@@ -108,40 +115,40 @@ export function RequestDetailPage() {
 
       {error && (
         <div className="card p-4 border-rose-200 bg-rose-50 text-rose-700 text-sm">
-          {error}
+          {t("detail.actionError", { message: error })}
         </div>
       )}
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <div className="card p-5 lg:col-span-2 space-y-4">
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 text-sm">
-            <Field label="Requester" value={request.requester} />
-            <Field label="Department" value={request.department} />
-            <Field label="Vendor" value={request.vendor_name || request.vendor_no} />
-            <Field label="Document Date" value={formatDate(request.document_date)} />
-            <Field label="Required Date" value={formatDate(request.required_date)} />
-            <Field label="Currency" value={request.currency_code} />
-            <Field label="Submitted At" value={formatDate(request.submitted_at)} />
-            <Field label="Approver" value={request.approver || "—"} />
-            <Field label="Decided At" value={formatDate(request.decided_at)} />
+            <Field label={t("detail.fields.requester")} value={request.requester} />
+            <Field label={t("detail.fields.department")} value={request.department} />
             <Field
-              label="BC Document ID"
-              value={request.bc_document_id || "—"}
+              label={t("detail.fields.vendor")}
+              value={request.vendor_name || request.vendor_no}
             />
-            <Field label="Synced At" value={formatDate(request.synced_at)} />
-            <Field label="Comment" value={request.approval_comment || "—"} />
+            <Field label={t("detail.fields.documentDate")} value={formatDate(request.document_date)} />
+            <Field label={t("detail.fields.requiredDate")} value={formatDate(request.required_date)} />
+            <Field label={t("detail.fields.currency")} value={request.currency_code} />
+            <Field label={t("detail.fields.submittedAt")} value={formatDate(request.submitted_at)} />
+            <Field label={t("detail.fields.approver")} value={request.approver || "—"} />
+            <Field label={t("detail.fields.decidedAt")} value={formatDate(request.decided_at)} />
+            <Field label={t("detail.fields.bcDocumentId")} value={request.bc_document_id || "—"} />
+            <Field label={t("detail.fields.syncedAt")} value={formatDate(request.synced_at)} />
+            <Field label={t("detail.fields.comment")} value={request.approval_comment || "—"} />
           </div>
 
           <div>
-            <h3 className="text-sm font-semibold text-slate-700 mb-2">Lines</h3>
+            <h3 className="text-sm font-semibold text-slate-700 mb-2">{t("detail.lines")}</h3>
             <table className="w-full text-sm">
               <thead className="text-xs uppercase tracking-wide text-slate-500">
                 <tr>
-                  <th className="text-left py-2">Item</th>
-                  <th className="text-left py-2">Description</th>
-                  <th className="text-right py-2">Qty</th>
-                  <th className="text-right py-2">Unit Price</th>
-                  <th className="text-right py-2">Amount</th>
+                  <th className="text-left py-2">{t("detail.lineColumns.item")}</th>
+                  <th className="text-left py-2">{t("detail.lineColumns.description")}</th>
+                  <th className="text-right py-2">{t("detail.lineColumns.qty")}</th>
+                  <th className="text-right py-2">{t("detail.lineColumns.unitPrice")}</th>
+                  <th className="text-right py-2">{t("detail.lineColumns.amount")}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
@@ -162,17 +169,13 @@ export function RequestDetailPage() {
         </div>
 
         <div className="card p-5 space-y-4">
-          <h3 className="text-sm font-semibold text-slate-700">Workflow Actions</h3>
+          <h3 className="text-sm font-semibold text-slate-700">{t("detail.workflowActions")}</h3>
           <div>
-            <label className="label">Actor</label>
-            <input
-              className="input"
-              value={actor}
-              onChange={(e) => setActor(e.target.value)}
-            />
+            <label className="label">{t("detail.actor")}</label>
+            <input className="input" value={actor} onChange={(e) => setActor(e.target.value)} />
           </div>
           <div>
-            <label className="label">Comment</label>
+            <label className="label">{t("detail.comment")}</label>
             <textarea
               className="input min-h-[80px]"
               value={comment}
@@ -185,28 +188,28 @@ export function RequestDetailPage() {
               disabled={!canSubmit || busy !== ""}
               onClick={() => action("submit")}
             >
-              {busy === "submit" ? "…" : "📨 Submit"}
+              {busy === "submit" ? "…" : t("detail.submit")}
             </button>
             <button
               className="btn-success"
               disabled={!canDecide || busy !== ""}
               onClick={() => action("approve")}
             >
-              {busy === "approve" ? "…" : "✓ Approve"}
+              {busy === "approve" ? "…" : t("detail.approve")}
             </button>
             <button
               className="btn-danger"
               disabled={!canDecide || busy !== ""}
               onClick={() => action("reject")}
             >
-              {busy === "reject" ? "…" : "✗ Reject"}
+              {busy === "reject" ? "…" : t("detail.reject")}
             </button>
             <button
               className="btn-outline col-span-2"
               disabled={!canSync || busy !== ""}
               onClick={() => action("sync")}
             >
-              {busy === "sync" ? "…" : "🔄 Sync to Business Central"}
+              {busy === "sync" ? "…" : t("detail.syncToBC")}
             </button>
             {canDelete && (
               <button
@@ -214,29 +217,27 @@ export function RequestDetailPage() {
                 disabled={busy !== ""}
                 onClick={() => action("delete")}
               >
-                Delete
+                {t("detail.delete")}
               </button>
             )}
           </div>
-          <p className="text-xs text-slate-500">
-            Allowed transitions: Draft → Submitted → (Approved | Rejected) → Synced.
-          </p>
+          <p className="text-xs text-slate-500">{t("detail.transitionsHint")}</p>
         </div>
       </div>
 
       <div className="card p-5">
-        <h3 className="text-sm font-semibold text-slate-700 mb-3">Audit Trail</h3>
+        <h3 className="text-sm font-semibold text-slate-700 mb-3">{t("detail.auditTrail")}</h3>
         {logs.length === 0 ? (
-          <div className="text-sm text-slate-500">No audit entries yet.</div>
+          <div className="text-sm text-slate-500">{t("detail.noAuditEntries")}</div>
         ) : (
           <table className="w-full text-sm">
             <thead className="text-xs uppercase tracking-wide text-slate-500">
               <tr>
-                <th className="text-left py-2">Time</th>
-                <th className="text-left py-2">Actor</th>
-                <th className="text-left py-2">Action</th>
-                <th className="text-left py-2">Sync</th>
-                <th className="text-left py-2">Error</th>
+                <th className="text-left py-2">{t("detail.auditColumns.time")}</th>
+                <th className="text-left py-2">{t("detail.auditColumns.actor")}</th>
+                <th className="text-left py-2">{t("detail.auditColumns.action")}</th>
+                <th className="text-left py-2">{t("detail.auditColumns.sync")}</th>
+                <th className="text-left py-2">{t("detail.auditColumns.error")}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">

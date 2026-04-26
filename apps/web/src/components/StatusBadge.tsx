@@ -1,4 +1,6 @@
 import clsx from "clsx";
+import { useTranslation } from "react-i18next";
+
 import type { RequestStatus, SyncStatus } from "@/types";
 
 const REQUEST_STYLES: Record<RequestStatus, string> = {
@@ -16,18 +18,17 @@ const SYNC_STYLES: Record<SyncStatus, string> = {
 };
 
 export function StatusBadge({ status }: { status: RequestStatus }) {
-  return <span className={clsx("badge", REQUEST_STYLES[status])}>{status}</span>;
+  const { t } = useTranslation();
+  return <span className={clsx("badge", REQUEST_STYLES[status])}>{t(`status.${status}`)}</span>;
 }
 
 export function SyncStatusBadge({ status }: { status: SyncStatus }) {
-  return <span className={clsx("badge", SYNC_STYLES[status])}>{status}</span>;
+  const { t } = useTranslation();
+  return <span className={clsx("badge", SYNC_STYLES[status])}>{t(`syncStatus.${status}`)}</span>;
 }
 
 export function HighRiskBadge({ value }: { value: boolean }) {
+  const { t } = useTranslation();
   if (!value) return <span className="text-xs text-slate-400">—</span>;
-  return (
-    <span className="badge bg-rose-100 text-rose-800">
-      ⚠ High-Risk
-    </span>
-  );
+  return <span className="badge bg-rose-100 text-rose-800">{t("highRisk.badge")}</span>;
 }

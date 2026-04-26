@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+
 import { api } from "@/lib/api";
 
 interface LineForm {
@@ -19,6 +21,7 @@ const emptyLine = (): LineForm => ({
 });
 
 export function CreateRequestPage() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [error, setError] = useState<string>("");
   const [submitting, setSubmitting] = useState(false);
@@ -64,15 +67,13 @@ export function CreateRequestPage() {
   return (
     <div className="space-y-4 max-w-4xl">
       <div>
-        <h2 className="text-xl font-semibold text-slate-800">Create Purchase Request</h2>
-        <p className="text-sm text-slate-500 mt-1">
-          Save the request as Draft, then submit for approval.
-        </p>
+        <h2 className="text-xl font-semibold text-slate-800">{t("create.title")}</h2>
+        <p className="text-sm text-slate-500 mt-1">{t("create.subtitle")}</p>
       </div>
 
       {error && (
         <div className="card p-4 border-rose-200 bg-rose-50 text-rose-700 text-sm">
-          {error}
+          {t("create.submitError", { message: error })}
         </div>
       )}
 
@@ -80,17 +81,17 @@ export function CreateRequestPage() {
         <div className="card p-5 space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="label">Description</label>
+              <label className="label">{t("create.fields.description")}</label>
               <input
                 className="input"
                 value={form.description}
                 onChange={(e) => setForm({ ...form, description: e.target.value })}
-                placeholder="e.g. Office laptops Q2"
+                placeholder={t("create.placeholders.description")}
                 required
               />
             </div>
             <div>
-              <label className="label">Required Date</label>
+              <label className="label">{t("create.fields.requiredDate")}</label>
               <input
                 type="date"
                 className="input"
@@ -99,7 +100,7 @@ export function CreateRequestPage() {
               />
             </div>
             <div>
-              <label className="label">Requester</label>
+              <label className="label">{t("create.fields.requester")}</label>
               <input
                 className="input"
                 value={form.requester}
@@ -107,7 +108,7 @@ export function CreateRequestPage() {
               />
             </div>
             <div>
-              <label className="label">Department</label>
+              <label className="label">{t("create.fields.department")}</label>
               <input
                 className="input"
                 value={form.department}
@@ -115,7 +116,7 @@ export function CreateRequestPage() {
               />
             </div>
             <div>
-              <label className="label">Vendor No.</label>
+              <label className="label">{t("create.fields.vendorNo")}</label>
               <input
                 className="input"
                 value={form.vendor_no}
@@ -123,7 +124,7 @@ export function CreateRequestPage() {
               />
             </div>
             <div>
-              <label className="label">Vendor Name</label>
+              <label className="label">{t("create.fields.vendorName")}</label>
               <input
                 className="input"
                 value={form.vendor_name}
@@ -131,7 +132,7 @@ export function CreateRequestPage() {
               />
             </div>
             <div>
-              <label className="label">Currency</label>
+              <label className="label">{t("create.fields.currency")}</label>
               <input
                 className="input"
                 value={form.currency_code}
@@ -143,25 +144,25 @@ export function CreateRequestPage() {
 
         <div className="card p-5 space-y-3">
           <div className="flex items-center justify-between">
-            <h3 className="text-sm font-semibold text-slate-700">Lines</h3>
+            <h3 className="text-sm font-semibold text-slate-700">{t("create.lines")}</h3>
             <button
               type="button"
               className="btn-outline"
               onClick={() => setLines([...lines, emptyLine()])}
             >
-              ➕ Add Line
+              {t("create.addLine")}
             </button>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead className="text-xs uppercase tracking-wide text-slate-500">
                 <tr>
-                  <th className="text-left py-2">Item No.</th>
-                  <th className="text-left py-2">Description</th>
-                  <th className="text-right py-2">Qty</th>
-                  <th className="text-left py-2">UoM</th>
-                  <th className="text-right py-2">Unit Price</th>
-                  <th className="text-right py-2">Amount</th>
+                  <th className="text-left py-2">{t("create.lineColumns.itemNo")}</th>
+                  <th className="text-left py-2">{t("create.lineColumns.description")}</th>
+                  <th className="text-right py-2">{t("create.lineColumns.quantity")}</th>
+                  <th className="text-left py-2">{t("create.lineColumns.uom")}</th>
+                  <th className="text-right py-2">{t("create.lineColumns.unitPrice")}</th>
+                  <th className="text-right py-2">{t("create.lineColumns.amount")}</th>
                   <th />
                 </tr>
               </thead>
@@ -175,7 +176,7 @@ export function CreateRequestPage() {
                           className="input"
                           value={line.item_no}
                           onChange={(e) => updateLine(idx, { item_no: e.target.value })}
-                          placeholder="ITEM-XXX"
+                          placeholder={t("create.placeholders.itemNo")}
                         />
                       </td>
                       <td className="py-2 pr-2">
@@ -220,7 +221,7 @@ export function CreateRequestPage() {
                             className="text-rose-500 text-xs hover:underline"
                             onClick={() => setLines(lines.filter((_, i) => i !== idx))}
                           >
-                            Remove
+                            {t("create.remove")}
                           </button>
                         )}
                       </td>
@@ -231,7 +232,7 @@ export function CreateRequestPage() {
               <tfoot>
                 <tr className="border-t-2 border-slate-200 font-semibold">
                   <td colSpan={5} className="py-3 text-right text-slate-600">
-                    Total
+                    {t("create.total")}
                   </td>
                   <td className="py-3 text-right">{total.toLocaleString()}</td>
                   <td />
@@ -248,10 +249,10 @@ export function CreateRequestPage() {
             onClick={() => navigate(-1)}
             disabled={submitting}
           >
-            Cancel
+            {t("create.cancel")}
           </button>
           <button type="submit" className="btn-primary" disabled={submitting}>
-            {submitting ? "Saving…" : "Save as Draft"}
+            {submitting ? t("create.saving") : t("create.saveDraft")}
           </button>
         </div>
       </form>

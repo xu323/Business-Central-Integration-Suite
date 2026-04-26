@@ -1,0 +1,197 @@
+{
+  "common": {
+    "loading": "Loading…",
+    "cancel": "Cancel",
+    "saving": "Saving…",
+    "save": "Save",
+    "delete": "Delete",
+    "remove": "Remove",
+    "view": "View",
+    "back": "Back",
+    "ok": "OK",
+    "actions": "Actions",
+    "total": "Total",
+    "viewArrow": "View →",
+    "viewAllArrow": "View all →",
+    "search": "Search",
+    "errorPrefix": "Error"
+  },
+  "language": {
+    "label": "Language",
+    "switcherTitle": "Switch language",
+    "zh-TW": "繁體中文",
+    "en": "English",
+    "ja": "日本語"
+  },
+  "app": {
+    "title": "Business Central Integration Suite",
+    "subtitle": "Procurement Approval & API Hub",
+    "console": {
+      "tag": "BC Suite",
+      "title": "Integration Console"
+    },
+    "footer": "v1.0 · MSP demo"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "requests": "Purchase Requests",
+    "createRequest": "Create Request",
+    "auditLogs": "Audit Logs"
+  },
+  "topbar": {
+    "apiHealthy": "API Healthy",
+    "apiDown": "API Down",
+    "bcModeLabel": "BC"
+  },
+  "status": {
+    "all": "All",
+    "Draft": "Draft",
+    "Submitted": "Submitted",
+    "Approved": "Approved",
+    "Rejected": "Rejected",
+    "Synced": "Synced"
+  },
+  "syncStatus": {
+    "Pending": "Pending",
+    "Success": "Success",
+    "Failed": "Failed"
+  },
+  "highRisk": {
+    "badge": "⚠ High-Risk",
+    "tag": "High-Risk"
+  },
+  "dashboard": {
+    "title": "Overview",
+    "subtitle": "Procurement & approval pipeline at a glance.",
+    "newRequest": "➕ New Request",
+    "totalRequests": "Total Requests",
+    "highRiskApprovals": "High-Risk Approvals",
+    "openAmount": "Open Amount",
+    "syncedAmount": "Synced Amount",
+    "byStatus": "By Status",
+    "syncHealth": "Sync Health",
+    "recentFailures": "Recent failures (7d)",
+    "syncedDocuments": "Synced documents",
+    "viewAuditLogs": "View audit logs →",
+    "loadFailed": "Failed to load dashboard: {{message}}"
+  },
+  "requestList": {
+    "title": "Purchase Requests",
+    "summary": "{{count}} requests · total {{amount}}",
+    "newRequest": "➕ New Request",
+    "searchLabel": "Search",
+    "searchPlaceholder": "Description / vendor / requester",
+    "statusLabel": "Status",
+    "columns": {
+      "number": "Number",
+      "description": "Description",
+      "vendor": "Vendor",
+      "amount": "Amount",
+      "status": "Status",
+      "risk": "Risk",
+      "created": "Created",
+      "actions": "Actions"
+    },
+    "rowAction": "View →",
+    "empty": {
+      "title": "No requests yet",
+      "description": "Create your first purchase request to start the approval workflow.",
+      "cta": "➕ Create Request"
+    },
+    "loadError": "Failed to load: {{message}}"
+  },
+  "create": {
+    "title": "Create Purchase Request",
+    "subtitle": "Save the request as Draft, then submit for approval.",
+    "fields": {
+      "description": "Description",
+      "requiredDate": "Required Date",
+      "requester": "Requester",
+      "department": "Department",
+      "vendorNo": "Vendor No.",
+      "vendorName": "Vendor Name",
+      "currency": "Currency"
+    },
+    "placeholders": {
+      "description": "e.g. Office laptops Q2",
+      "itemNo": "ITEM-XXX"
+    },
+    "lines": "Lines",
+    "addLine": "➕ Add Line",
+    "lineColumns": {
+      "itemNo": "Item No.",
+      "description": "Description",
+      "quantity": "Qty",
+      "uom": "UoM",
+      "unitPrice": "Unit Price",
+      "amount": "Amount"
+    },
+    "total": "Total",
+    "remove": "Remove",
+    "cancel": "Cancel",
+    "saveDraft": "Save as Draft",
+    "saving": "Saving…",
+    "submitError": "Failed to create: {{message}}"
+  },
+  "detail": {
+    "back": "← Back to list",
+    "total": "Total",
+    "fields": {
+      "requester": "Requester",
+      "department": "Department",
+      "vendor": "Vendor",
+      "documentDate": "Document Date",
+      "requiredDate": "Required Date",
+      "currency": "Currency",
+      "submittedAt": "Submitted At",
+      "approver": "Approver",
+      "decidedAt": "Decided At",
+      "bcDocumentId": "BC Document ID",
+      "syncedAt": "Synced At",
+      "comment": "Comment"
+    },
+    "lines": "Lines",
+    "lineColumns": {
+      "item": "Item",
+      "description": "Description",
+      "qty": "Qty",
+      "unitPrice": "Unit Price",
+      "amount": "Amount"
+    },
+    "workflowActions": "Workflow Actions",
+    "actor": "Actor",
+    "comment": "Comment",
+    "submit": "📨 Submit",
+    "approve": "✓ Approve",
+    "reject": "✗ Reject",
+    "syncToBC": "🔄 Sync to Business Central",
+    "delete": "Delete",
+    "deleteConfirm": "Delete this request?",
+    "transitionsHint": "Allowed transitions: Draft → Submitted → (Approved | Rejected) → Synced.",
+    "auditTrail": "Audit Trail",
+    "noAuditEntries": "No audit entries yet.",
+    "auditColumns": {
+      "time": "Time",
+      "actor": "Actor",
+      "action": "Action",
+      "sync": "Sync",
+      "error": "Error"
+    },
+    "actionError": "Action failed: {{message}}",
+    "loadError": "Failed to load: {{message}}"
+  },
+  "audit": {
+    "title": "Audit Logs",
+    "subtitle": "Every workflow event and BC sync attempt is captured here.",
+    "columns": {
+      "time": "Time",
+      "actor": "Actor",
+      "action": "Action",
+      "target": "Target",
+      "sync": "Sync",
+      "error": "Error"
+    },
+    "empty": "No audit logs yet",
+    "loadError": "Failed to load: {{message}}"
+  }
+}

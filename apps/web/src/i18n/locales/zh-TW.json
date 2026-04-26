@@ -1,0 +1,197 @@
+{
+  "common": {
+    "loading": "載入中…",
+    "cancel": "取消",
+    "saving": "儲存中…",
+    "save": "儲存",
+    "delete": "刪除",
+    "remove": "移除",
+    "view": "檢視",
+    "back": "返回",
+    "ok": "確定",
+    "actions": "操作",
+    "total": "合計",
+    "viewArrow": "檢視 →",
+    "viewAllArrow": "全部檢視 →",
+    "search": "搜尋",
+    "errorPrefix": "錯誤"
+  },
+  "language": {
+    "label": "語言",
+    "switcherTitle": "切換語言",
+    "zh-TW": "繁體中文",
+    "en": "English",
+    "ja": "日本語"
+  },
+  "app": {
+    "title": "Business Central Integration Suite",
+    "subtitle": "請購核准與 API 整合中樞",
+    "console": {
+      "tag": "BC Suite",
+      "title": "整合管理主控台"
+    },
+    "footer": "v1.0 · MSP 示範"
+  },
+  "nav": {
+    "dashboard": "儀表板",
+    "requests": "請購單",
+    "createRequest": "新增請購單",
+    "auditLogs": "稽核紀錄"
+  },
+  "topbar": {
+    "apiHealthy": "API 正常",
+    "apiDown": "API 異常",
+    "bcModeLabel": "BC 模式"
+  },
+  "status": {
+    "all": "全部",
+    "Draft": "草稿",
+    "Submitted": "已送審",
+    "Approved": "已核准",
+    "Rejected": "已退回",
+    "Synced": "已同步"
+  },
+  "syncStatus": {
+    "Pending": "處理中",
+    "Success": "成功",
+    "Failed": "失敗"
+  },
+  "highRisk": {
+    "badge": "⚠ 高風險",
+    "tag": "高風險"
+  },
+  "dashboard": {
+    "title": "總覽",
+    "subtitle": "請購／核准流程一覽。",
+    "newRequest": "➕ 新增請購單",
+    "totalRequests": "請購總筆數",
+    "highRiskApprovals": "高風險核准",
+    "openAmount": "未結金額",
+    "syncedAmount": "已同步金額",
+    "byStatus": "依狀態",
+    "syncHealth": "同步健康度",
+    "recentFailures": "近 7 日失敗",
+    "syncedDocuments": "已同步單據",
+    "viewAuditLogs": "檢視稽核紀錄 →",
+    "loadFailed": "載入儀表板失敗：{{message}}"
+  },
+  "requestList": {
+    "title": "請購單",
+    "summary": "{{count}} 筆請購單 · 合計 {{amount}}",
+    "newRequest": "➕ 新增請購單",
+    "searchLabel": "搜尋",
+    "searchPlaceholder": "說明 / 廠商 / 申請人",
+    "statusLabel": "狀態",
+    "columns": {
+      "number": "單號",
+      "description": "說明",
+      "vendor": "廠商",
+      "amount": "金額",
+      "status": "狀態",
+      "risk": "風險",
+      "created": "建立時間",
+      "actions": "操作"
+    },
+    "rowAction": "詳細 →",
+    "empty": {
+      "title": "目前沒有任何請購單",
+      "description": "建立第一筆請購單以啟動核准流程。",
+      "cta": "➕ 建立請購單"
+    },
+    "loadError": "載入失敗：{{message}}"
+  },
+  "create": {
+    "title": "新增請購單",
+    "subtitle": "先存為草稿，再送出申請核准。",
+    "fields": {
+      "description": "說明",
+      "requiredDate": "需求日期",
+      "requester": "申請人",
+      "department": "部門",
+      "vendorNo": "廠商編號",
+      "vendorName": "廠商名稱",
+      "currency": "幣別"
+    },
+    "placeholders": {
+      "description": "例：第二季新進員工筆電",
+      "itemNo": "ITEM-XXX"
+    },
+    "lines": "明細",
+    "addLine": "➕ 新增明細",
+    "lineColumns": {
+      "itemNo": "品號",
+      "description": "說明",
+      "quantity": "數量",
+      "uom": "單位",
+      "unitPrice": "單價",
+      "amount": "金額"
+    },
+    "total": "合計",
+    "remove": "刪除",
+    "cancel": "取消",
+    "saveDraft": "儲存為草稿",
+    "saving": "儲存中…",
+    "submitError": "建立失敗：{{message}}"
+  },
+  "detail": {
+    "back": "← 返回列表",
+    "total": "總金額",
+    "fields": {
+      "requester": "申請人",
+      "department": "部門",
+      "vendor": "廠商",
+      "documentDate": "單據日期",
+      "requiredDate": "需求日期",
+      "currency": "幣別",
+      "submittedAt": "送審時間",
+      "approver": "核准人",
+      "decidedAt": "決議時間",
+      "bcDocumentId": "BC 單據編號",
+      "syncedAt": "同步時間",
+      "comment": "備註"
+    },
+    "lines": "明細",
+    "lineColumns": {
+      "item": "品號",
+      "description": "說明",
+      "qty": "數量",
+      "unitPrice": "單價",
+      "amount": "金額"
+    },
+    "workflowActions": "流程操作",
+    "actor": "操作人",
+    "comment": "備註",
+    "submit": "📨 送審",
+    "approve": "✓ 核准",
+    "reject": "✗ 退回",
+    "syncToBC": "🔄 同步至 Business Central",
+    "delete": "刪除",
+    "deleteConfirm": "確定要刪除這筆請購單？",
+    "transitionsHint": "允許的狀態流：草稿 → 已送審 →（已核准 | 已退回）→ 已同步。",
+    "auditTrail": "稽核軌跡",
+    "noAuditEntries": "尚無稽核紀錄。",
+    "auditColumns": {
+      "time": "時間",
+      "actor": "操作人",
+      "action": "動作",
+      "sync": "同步",
+      "error": "錯誤"
+    },
+    "actionError": "操作失敗：{{message}}",
+    "loadError": "載入失敗：{{message}}"
+  },
+  "audit": {
+    "title": "稽核紀錄",
+    "subtitle": "所有流程事件與 BC 同步嘗試都會記錄在此。",
+    "columns": {
+      "time": "時間",
+      "actor": "操作人",
+      "action": "動作",
+      "target": "對象",
+      "sync": "同步",
+      "error": "錯誤"
+    },
+    "empty": "目前沒有任何稽核紀錄",
+    "loadError": "載入失敗：{{message}}"
+  }
+}

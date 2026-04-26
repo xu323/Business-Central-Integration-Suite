@@ -1,22 +1,25 @@
-import { NavLink } from "react-router-dom";
 import clsx from "clsx";
+import { useTranslation } from "react-i18next";
+import { NavLink } from "react-router-dom";
 
 const NAV = [
-  { to: "/", label: "Dashboard", icon: "📊" },
-  { to: "/requests", label: "Purchase Requests", icon: "🧾" },
-  { to: "/requests/new", label: "Create Request", icon: "➕" },
-  { to: "/audit", label: "Audit Logs", icon: "🔍" },
-];
+  { to: "/", labelKey: "nav.dashboard", icon: "📊" },
+  { to: "/requests", labelKey: "nav.requests", icon: "🧾" },
+  { to: "/requests/new", labelKey: "nav.createRequest", icon: "➕" },
+  { to: "/audit", labelKey: "nav.auditLogs", icon: "🔍" },
+] as const;
 
 export function Sidebar() {
+  const { t } = useTranslation();
+
   return (
     <aside className="hidden md:flex w-64 shrink-0 flex-col border-r border-slate-200 bg-white">
       <div className="px-5 py-5 border-b border-slate-200">
         <div className="text-sm uppercase tracking-widest text-brand-600 font-semibold">
-          BC Suite
+          {t("app.console.tag")}
         </div>
         <div className="text-base font-semibold text-slate-800 mt-0.5">
-          Integration Console
+          {t("app.console.title")}
         </div>
       </div>
       <nav className="flex-1 px-3 py-4 space-y-1">
@@ -35,12 +38,12 @@ export function Sidebar() {
             }
           >
             <span className="text-base">{item.icon}</span>
-            <span>{item.label}</span>
+            <span>{t(item.labelKey)}</span>
           </NavLink>
         ))}
       </nav>
       <div className="px-5 py-4 text-xs text-slate-400 border-t border-slate-200">
-        v1.0 · MSP demo
+        {t("app.footer")}
       </div>
     </aside>
   );
