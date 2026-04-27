@@ -8,7 +8,7 @@ description: Use when a Business Central concept (AL syntax, OData API, Approval
 ## When to use
 
 - A new feature is about to touch BC concepts that are not yet captured in `docs/research-notes.md`.
-- An interviewer-facing answer needs a Microsoft Learn citation.
+- A design claim needs a Microsoft Learn citation before being committed to docs.
 - You're unsure whether a BC API field name / endpoint shape is real.
 
 ## Workflow

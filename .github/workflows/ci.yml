@@ -102,7 +102,7 @@ jobs:
       - name: Verify required docs
         run: |
           set -e
-          for f in README.md 使用方法.md docs/architecture.md docs/research-notes.md docs/security-notes.md docs/api.md docs/interview-guide.md .env.example docker-compose.yml docker-compose.ghcr.yml .github/workflows/release.yml; do
+          for f in README.md 使用方法.md docs/architecture.md docs/research-notes.md docs/security-notes.md docs/api.md docs/project-guide.md .env.example docker-compose.yml docker-compose.ghcr.yml .github/workflows/release.yml; do
             if [ ! -f "$f" ]; then
               echo "::error file=$f::Required document missing: $f"
               exit 1

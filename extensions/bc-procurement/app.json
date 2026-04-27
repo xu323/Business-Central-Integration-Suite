@@ -4,7 +4,7 @@
   "publisher": "xu323",
   "version": "1.0.0.0",
   "brief": "Purchase request and approval workflow extension for Business Central.",
-  "description": "Adds a streamlined Purchase Request → Approval → Sync flow on top of Microsoft Dynamics 365 Business Central. Used as the AL surface of the Business-Central-Integration-Suite portfolio project.",
+  "description": "Adds a streamlined Purchase Request → Approval → Sync flow on top of Microsoft Dynamics 365 Business Central. AL surface of the Business-Central-Integration-Suite project.",
   "privacyStatement": "https://example.com/privacy",
   "EULA": "https://example.com/eula",
   "help": "https://github.com/xu323/Business-Central-Integration-Suite",

@@ -28,7 +28,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(
     title="Business Central Integration Suite API",
     description=(
-        "REST API for the Business-Central-Integration-Suite portfolio project. "
+        "REST API for the Business-Central-Integration-Suite project. "
         "Implements the Purchase Request → Approval → Sync-to-BC flow that mirrors "
         "the AL extension in extensions/bc-procurement."
     ),

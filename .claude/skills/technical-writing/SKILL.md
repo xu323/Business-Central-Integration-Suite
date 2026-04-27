@@ -1,14 +1,14 @@
 ---
 name: technical-writing
-description: Use when authoring or updating README.md, 使用方法.md, docs/*.md. Especially for the absolute-beginner usage guide and the interview talking points.
+description: Use when authoring or updating README.md, 使用方法.md, docs/*.md. Especially for the absolute-beginner usage guide and the project tour.
 ---
 
 # Technical Writing
 
 ## When to use
 
-- A new feature lands and the README / 使用方法.md / interview-guide.md must reflect it.
-- An interviewer-facing claim needs to be backed by a file path.
+- A new feature lands and the README / 使用方法.md / project-guide.md must reflect it.
+- A design claim needs to be backed by a file path.
 
 ## Workflow
 
@@ -21,14 +21,15 @@ description: Use when authoring or updating README.md, 使用方法.md, docs/*.m
 ## Quality bar
 
 - Beginner can follow `使用方法.md` start-to-finish without external knowledge.
-- README opens with a 60-second "what this is + why it matters" hook for hiring managers.
-- Interview guide (`docs/interview-guide.md`) maps every job-spec keyword to a concrete file.
+- README opens with a 60-second "what this is + why it matters" hook focused on the technical scope.
+- Project guide (`docs/project-guide.md`) maps every major topic (AL, BC API, audit, CI/CD, i18n, security) to a concrete file.
 
 ## Forbidden
 
 - Marketing adjectives ("世界級", "無懈可擊").
 - Pasting code that does not exist in the repo.
 - Inventing performance / SLA numbers.
+- Job-application / interview / resume framing — documentation is for engineers reading the code, not for selling the author.
 
 ## Output format
 

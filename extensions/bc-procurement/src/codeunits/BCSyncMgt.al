@@ -24,7 +24,7 @@ codeunit 50101 "BC Sync Mgt."
     /// In a production-grade extension, the Purchase Header / Line
     /// references would be uncommented and this codeunit would call
     /// real BC tables. They're left commented out so the extension
-    /// stays self-contained for the portfolio repository.
+    /// stays self-contained for the reference repository.
     /// </remarks>
     procedure SyncRequestToPurchaseOrder(var Header: Record "Purchase Request Header")
     var
