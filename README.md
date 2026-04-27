@@ -133,7 +133,9 @@ docker compose up --build
 
 ## 七、CI/CD
 
-GitHub Actions ([`.github/workflows/ci.yml`](.github/workflows/ci.yml)) 在 push / PR 時跑：
+### 7.1 CI ([`.github/workflows/ci.yml`](.github/workflows/ci.yml))
+
+每次 push / PR 時跑：
 
 | Job | 內容 |
 |-----|------|
@@ -142,6 +144,32 @@ GitHub Actions ([`.github/workflows/ci.yml`](.github/workflows/ci.yml)) 在 push
 | `docker-build` | Build API + Web 鏡像（不推送） |
 | `docs-check` | 確認 README / 使用方法 / docs/* 等必要文件存在 |
 | `al-validation` | 驗證 `app.json` schema + AL 檔案語法（advisory；GitHub-hosted runner 無法跑 alc.exe） |
+
+### 7.2 CD ([`.github/workflows/release.yml`](.github/workflows/release.yml))
+
+push 到 `main`、推 `v*.*.*` tag、或手動觸發時跑：
+
+| Job | 內容 |
+|-----|------|
+| `publish (api)` | Buildx → push `ghcr.io/xu323/business-central-integration-suite/api` |
+| `publish (web)` | Buildx → push `ghcr.io/xu323/business-central-integration-suite/web` |
+| `summary` | 在 GitHub Actions Summary 列出產生的 image tags |
+
+Tag 規則由 `docker/metadata-action` 自動產生：
+- `latest`（main 分支）
+- `sha-<7字元>`（每個 commit）
+- `1.0.0` / `1.0` / `1`（推 `v1.0.0` tag 時）
+- `main` / `pr-<number>`（分支 / PR）
+
+> 第一次 push 後，packages 會在 `https://github.com/xu323?tab=packages` 出現，預設為 **private**。
+> 想公開：點該 package → Package settings → Change visibility → Public。
+
+跑釋出版（從 GHCR 拉而不是本地 build）：
+
+```powershell
+docker login ghcr.io                 # 私有時需要先登入
+docker compose -f docker-compose.ghcr.yml up
+```
 
 ---
 
