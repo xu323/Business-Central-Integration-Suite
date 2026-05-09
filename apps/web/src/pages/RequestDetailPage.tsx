@@ -136,16 +136,16 @@ export function RequestDetailPage() {
             <ArrowLeft size={12} strokeWidth={1.75} />
             {t("detail.back")}
           </Link>
-          <h2 className="text-xl font-semibold text-slate-800 mt-1 flex items-center gap-3 flex-wrap">
+          <h2 className="text-xl font-semibold text-neutral-190 mt-1 flex items-center gap-3 flex-wrap">
             {request.number}
             <StatusBadge status={request.status} />
             {request.high_risk && <HighRiskBadge value />}
           </h2>
-          <p className="text-sm text-slate-500 mt-1">{request.description}</p>
+          <p className="text-sm text-neutral-130 mt-1">{request.description}</p>
         </div>
         <div className="text-right">
-          <div className="text-xs text-slate-500">{t("detail.total")}</div>
-          <div className="text-2xl font-semibold text-slate-800">
+          <div className="text-xs text-neutral-130">{t("detail.total")}</div>
+          <div className="text-2xl font-semibold text-neutral-190">
             {formatCurrency(request.total_amount, request.currency_code)}
           </div>
         </div>
@@ -172,10 +172,10 @@ export function RequestDetailPage() {
           </div>
 
           <div>
-            <h3 className="text-sm font-semibold text-slate-700 mb-2">{t("detail.lines")}</h3>
+            <h3 className="text-sm font-semibold text-neutral-160 mb-2">{t("detail.lines")}</h3>
             <table className="w-full text-sm">
-              <thead className="text-xs font-semibold text-slate-500">
-                <tr className="border-b border-slate-100">
+              <thead className="text-xs font-semibold text-neutral-130">
+                <tr className="border-b border-neutral-20">
                   <th className="text-left py-2">{t("detail.lineColumns.item")}</th>
                   <th className="text-left py-2">{t("detail.lineColumns.description")}</th>
                   <th className="text-right py-2">{t("detail.lineColumns.qty")}</th>
@@ -183,7 +183,7 @@ export function RequestDetailPage() {
                   <th className="text-right py-2">{t("detail.lineColumns.amount")}</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody className="divide-y divide-neutral-20">
                 {request.lines.map((line) => (
                   <tr key={line.id}>
                     <td className="py-2 font-mono text-xs">{line.item_no}</td>
@@ -202,14 +202,14 @@ export function RequestDetailPage() {
 
         <Tooltip.Provider delayDuration={200}>
           <div className="card p-5 space-y-4">
-            <h3 className="text-sm font-semibold text-slate-700">{t("detail.workflowActions")}</h3>
+            <h3 className="text-sm font-semibold text-neutral-160">{t("detail.workflowActions")}</h3>
 
             {user && (
               <div className="rounded border border-brand-100 bg-brand-50 px-3 py-2 flex items-center gap-2">
                 <Avatar id={user.id} name={user.name} size="sm" />
-                <div className="text-xs text-slate-700 leading-tight">
+                <div className="text-xs text-neutral-160 leading-tight">
                   <div className="font-medium">{user.name}</div>
-                  <div className="text-slate-500">
+                  <div className="text-neutral-130">
                     {t("detail.identityHint", {
                       name: user.name,
                       roles: user.roles.join(" · "),
@@ -273,7 +273,7 @@ export function RequestDetailPage() {
               {canDelete && (
                 <button
                   type="button"
-                  className="btn-outline col-span-2 text-rose-600 border-rose-200 hover:bg-rose-50"
+                  className="btn-outline col-span-2 text-danger border-danger-border hover:bg-danger-bg"
                   disabled={busy !== ""}
                   onClick={() => setDeleteOpen(true)}
                 >
@@ -283,19 +283,19 @@ export function RequestDetailPage() {
               )}
             </div>
 
-            <p className="text-xs text-slate-500">{t("detail.transitionsHint")}</p>
+            <p className="text-xs text-neutral-130">{t("detail.transitionsHint")}</p>
           </div>
         </Tooltip.Provider>
       </div>
 
       <div className="card p-5">
-        <h3 className="text-sm font-semibold text-slate-700 mb-3">{t("detail.auditTrail")}</h3>
+        <h3 className="text-sm font-semibold text-neutral-160 mb-3">{t("detail.auditTrail")}</h3>
         {logs.length === 0 ? (
-          <div className="text-sm text-slate-500">{t("detail.noAuditEntries")}</div>
+          <div className="text-sm text-neutral-130">{t("detail.noAuditEntries")}</div>
         ) : (
           <table className="w-full text-sm">
-            <thead className="text-xs font-semibold text-slate-500">
-              <tr className="border-b border-slate-100">
+            <thead className="text-xs font-semibold text-neutral-130">
+              <tr className="border-b border-neutral-20">
                 <th className="text-left py-2">{t("detail.auditColumns.time")}</th>
                 <th className="text-left py-2">{t("detail.auditColumns.actor")}</th>
                 <th className="text-left py-2">{t("detail.auditColumns.action")}</th>
@@ -303,16 +303,16 @@ export function RequestDetailPage() {
                 <th className="text-left py-2">{t("detail.auditColumns.error")}</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-neutral-20">
               {logs.map((log) => (
                 <tr key={log.id}>
-                  <td className="py-2 text-xs text-slate-500">{formatDate(log.timestamp)}</td>
+                  <td className="py-2 text-xs text-neutral-130">{formatDate(log.timestamp)}</td>
                   <td className="py-2">{log.actor}</td>
                   <td className="py-2 font-mono text-xs">{log.action}</td>
                   <td className="py-2">
                     <SyncStatusBadge status={log.sync_status} />
                   </td>
-                  <td className="py-2 text-xs text-rose-600">{log.error_message || "—"}</td>
+                  <td className="py-2 text-xs text-danger">{log.error_message || "—"}</td>
                 </tr>
               ))}
             </tbody>
@@ -343,8 +343,8 @@ export function RequestDetailPage() {
 function Field({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <div className="text-xs font-semibold text-slate-500">{label}</div>
-      <div className="mt-0.5 text-slate-800 break-words">{value || "—"}</div>
+      <div className="text-xs font-semibold text-neutral-130">{label}</div>
+      <div className="mt-0.5 text-neutral-190 break-words">{value || "—"}</div>
     </div>
   );
 }
@@ -379,10 +379,10 @@ function ActionButton({
       <Tooltip.Portal>
         <Tooltip.Content
           side="top"
-          className="z-50 rounded bg-slate-900 text-white text-xs px-2 py-1 shadow"
+          className="z-50 rounded bg-neutral-190 text-white text-xs px-2 py-1 shadow"
         >
           {t("detail.roleRequired", { role: requireRole })}
-          <Tooltip.Arrow className="fill-slate-900" />
+          <Tooltip.Arrow className="fill-neutral-190" />
         </Tooltip.Content>
       </Tooltip.Portal>
     </Tooltip.Root>

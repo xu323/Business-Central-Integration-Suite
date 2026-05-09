@@ -83,11 +83,11 @@ export function CommandPalette({ open, onOpenChange }: Props) {
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-40 bg-slate-900/40 backdrop-blur-sm" />
-        <Dialog.Content className="fixed left-1/2 top-[20%] z-50 w-[min(560px,calc(100vw-2rem))] -translate-x-1/2 rounded-md border border-slate-200 bg-white shadow-flyout focus:outline-none">
+        <Dialog.Overlay className="fixed inset-0 z-40 bg-neutral-190/40 backdrop-blur-sm" />
+        <Dialog.Content className="fixed left-1/2 top-[20%] z-50 w-[min(560px,calc(100vw-2rem))] -translate-x-1/2 rounded border border-neutral-40 bg-white shadow-flyout focus:outline-none">
           <Dialog.Title className="sr-only">{t("commandPalette.title")}</Dialog.Title>
-          <div className="flex items-center gap-2 px-4 py-3 border-b border-slate-200">
-            <Search size={18} strokeWidth={1.75} className="text-slate-400" />
+          <div className="flex items-center gap-2 px-4 py-3 border-b border-neutral-40">
+            <Search size={18} strokeWidth={1.75} className="text-neutral-90" />
             <input
               autoFocus
               value={query}
@@ -99,14 +99,14 @@ export function CommandPalette({ open, onOpenChange }: Props) {
               onKeyDown={onKeyDown}
               className="flex-1 bg-transparent text-sm focus:outline-none"
             />
-            <kbd className="text-[10px] font-semibold text-slate-400 px-1.5 py-0.5 border border-slate-200 rounded">
+            <kbd className="text-[10px] font-semibold text-neutral-90 px-1.5 py-0.5 border border-neutral-40 rounded">
               ESC
             </kbd>
           </div>
 
           <div className="max-h-[60vh] overflow-y-auto py-2">
             {flat.length === 0 ? (
-              <div className="px-4 py-8 text-center text-sm text-slate-500">
+              <div className="px-4 py-8 text-center text-sm text-neutral-130">
                 {t("commandPalette.empty")}
               </div>
             ) : (
@@ -115,7 +115,7 @@ export function CommandPalette({ open, onOpenChange }: Props) {
                 if (items.length === 0) return null;
                 return (
                   <div key={group} className="px-2 pb-2">
-                    <div className="px-2 py-1.5 text-[10px] font-semibold tracking-wide text-slate-400 uppercase">
+                    <div className="px-2 py-1.5 text-[10px] font-semibold tracking-wide text-neutral-90 uppercase">
                       {t(`commandPalette.groups.${group}`)}
                     </div>
                     {items.map((item) => {
@@ -133,12 +133,12 @@ export function CommandPalette({ open, onOpenChange }: Props) {
                           }}
                           className={cn(
                             "w-full flex items-center gap-3 rounded px-2 py-2 text-sm text-left",
-                            isActive ? "bg-brand-50 text-brand-700" : "text-slate-700 hover:bg-slate-50",
+                            isActive ? "bg-brand-50 text-brand-700" : "text-neutral-160 hover:bg-neutral-10",
                           )}
                         >
                           <Icon size={16} strokeWidth={1.75} />
                           <span className="flex-1">{t(item.labelKey)}</span>
-                          <ChevronRight size={14} strokeWidth={1.75} className="text-slate-400" />
+                          <ChevronRight size={14} strokeWidth={1.75} className="text-neutral-90" />
                         </button>
                       );
                     })}

@@ -51,13 +51,13 @@ export function Topbar() {
   }, []);
 
   return (
-    <header className="h-14 px-4 sm:px-6 border-b border-slate-200 bg-white flex items-center justify-between gap-3">
+    <header className="h-14 px-4 sm:px-6 border-b border-neutral-40 bg-white flex items-center justify-between gap-3">
       <div className="flex items-center gap-3 min-w-0">
         <div className="hidden lg:block min-w-0">
-          <h1 className="text-sm font-semibold text-slate-800 truncate">{t("app.title")}</h1>
-          <p className="text-xs text-slate-500 truncate">{t("app.subtitle")}</p>
+          <h1 className="text-sm font-semibold text-neutral-190 truncate">{t("app.title")}</h1>
+          <p className="text-xs text-neutral-130 truncate">{t("app.subtitle")}</p>
         </div>
-        <div className="hidden lg:block w-px h-6 bg-slate-200" />
+        <div className="hidden lg:block w-px h-6 bg-neutral-40" />
         <OrgSwitcher />
       </div>
 
@@ -67,35 +67,35 @@ export function Topbar() {
           onClick={() => setPaletteOpen(true)}
           title={t("topbar.commandShortcut")}
           aria-label={t("topbar.commandShortcut")}
-          className="hidden md:inline-flex items-center gap-2 rounded border border-slate-200 hover:bg-slate-50 px-2.5 py-1.5 text-xs text-slate-600"
+          className="hidden md:inline-flex items-center gap-2 rounded border border-neutral-40 hover:bg-neutral-10 px-2.5 py-1.5 text-xs text-neutral-130"
         >
           <Command size={14} strokeWidth={1.75} />
-          <span className="text-slate-400">⌘ K</span>
+          <span className="text-neutral-90">⌘ K</span>
         </button>
 
         <div
-          className="hidden xl:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-50 border border-slate-200"
+          className="hidden xl:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-neutral-10 border border-neutral-40"
           title={`${healthy ? t("topbar.apiHealthy") : t("topbar.apiDown")} · ${t("topbar.bcModeLabel")}: ${bcMode}`}
         >
           <span
             className={cn(
               "inline-block w-1.5 h-1.5 rounded-full",
-              healthy ? "bg-emerald-500" : "bg-rose-500",
+              healthy ? "bg-success" : "bg-danger",
             )}
             aria-hidden
           />
-          <span className="text-[11px] font-medium text-slate-600">
+          <span className="text-[11px] font-medium text-neutral-130">
             v{version || "—"}
           </span>
-          <span className="text-[10px] text-slate-400">·</span>
-          <span className="text-[10px] uppercase tracking-wide text-slate-500">
+          <span className="text-[10px] text-neutral-90">·</span>
+          <span className="text-[10px] uppercase tracking-wide text-neutral-130">
             {bcMode}
           </span>
         </div>
 
         <NotificationBell />
         <LanguageSwitcher />
-        <div className="w-px h-6 bg-slate-200 mx-1" />
+        <div className="w-px h-6 bg-neutral-40 mx-1" />
         <UserMenu />
       </div>
 

@@ -57,8 +57,8 @@ export function RequestListPage() {
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-xl font-semibold text-slate-800">{t("requestList.title")}</h2>
-          <p className="text-sm text-slate-500 mt-1">
+          <h2 className="text-xl font-semibold text-neutral-190">{t("requestList.title")}</h2>
+          <p className="text-sm text-neutral-130 mt-1">
             {t("requestList.summary", {
               count: requests.length,
               amount: formatCurrency(total),
@@ -101,7 +101,7 @@ export function RequestListPage() {
                   className={`text-xs px-3 py-1.5 rounded-full border ${
                     active
                       ? "bg-brand-600 text-white border-brand-600"
-                      : "bg-white border-slate-200 text-slate-600 hover:border-brand-400"
+                      : "bg-white border-neutral-40 text-neutral-130 hover:border-brand-400"
                   }`}
                 >
                   {label}
@@ -116,7 +116,7 @@ export function RequestListPage() {
         {loading ? (
           <Spinner />
         ) : error ? (
-          <div className="p-6 text-rose-700 bg-rose-50">
+          <div className="p-6 text-danger bg-danger-bg">
             {t("requestList.loadError", { message: error })}
           </div>
         ) : requests.length === 0 ? (
@@ -131,7 +131,7 @@ export function RequestListPage() {
           />
         ) : (
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 text-slate-600 text-xs uppercase tracking-wide">
+            <thead className="bg-neutral-10 text-neutral-130 text-xs font-semibold">
               <tr>
                 <th className="text-left px-4 py-3 font-medium">{t("requestList.columns.number")}</th>
                 <th className="text-left px-4 py-3 font-medium">{t("requestList.columns.description")}</th>
@@ -143,12 +143,12 @@ export function RequestListPage() {
                 <th className="text-right px-4 py-3 font-medium">{t("requestList.columns.actions")}</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-neutral-20">
               {requests.map((r) => (
-                <tr key={r.id} className="hover:bg-slate-50">
-                  <td className="px-4 py-3 font-mono text-xs text-slate-700">{r.number}</td>
-                  <td className="px-4 py-3 text-slate-800">{r.description || "—"}</td>
-                  <td className="px-4 py-3 text-slate-600">{r.vendor_name || r.vendor_no || "—"}</td>
+                <tr key={r.id} className="hover:bg-neutral-10">
+                  <td className="px-4 py-3 font-mono text-xs text-neutral-160">{r.number}</td>
+                  <td className="px-4 py-3 text-neutral-190">{r.description || "—"}</td>
+                  <td className="px-4 py-3 text-neutral-130">{r.vendor_name || r.vendor_no || "—"}</td>
                   <td className="px-4 py-3 text-right font-medium">
                     {formatCurrency(r.total_amount, r.currency_code)}
                   </td>
@@ -158,7 +158,7 @@ export function RequestListPage() {
                   <td className="px-4 py-3">
                     <HighRiskBadge value={r.high_risk} />
                   </td>
-                  <td className="px-4 py-3 text-slate-500 text-xs">{formatDate(r.created_at)}</td>
+                  <td className="px-4 py-3 text-neutral-130 text-xs">{formatDate(r.created_at)}</td>
                   <td className="px-4 py-3 text-right">
                     <Link to={`/requests/${r.id}`} className="text-brand-600 hover:underline text-sm">
                       {t("requestList.rowAction")}

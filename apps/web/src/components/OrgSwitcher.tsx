@@ -17,32 +17,32 @@ export function OrgSwitcher() {
       <DropdownMenu.Trigger asChild>
         <button
           type="button"
-          className="flex items-center gap-2 rounded border border-slate-200 hover:bg-slate-50 transition-colors px-2.5 py-1.5 text-xs"
+          className="flex items-center gap-2 rounded border border-neutral-40 hover:bg-neutral-10 transition-colors px-2.5 py-1.5 text-xs"
           title={t("topbar.orgSwitcher.title")}
         >
-          <Building2 size={14} strokeWidth={1.75} className="text-slate-500" />
-          <span className="font-medium text-slate-700 max-w-[12rem] truncate">
+          <Building2 size={14} strokeWidth={1.75} className="text-neutral-130" />
+          <span className="font-medium text-neutral-160 max-w-[12rem] truncate">
             {user.organization.name}
           </span>
-          <ChevronDown size={12} strokeWidth={1.75} className="text-slate-400" />
+          <ChevronDown size={12} strokeWidth={1.75} className="text-neutral-90" />
         </button>
       </DropdownMenu.Trigger>
       <DropdownMenu.Portal>
         <DropdownMenu.Content
           align="start"
           sideOffset={6}
-          className="z-50 min-w-[240px] rounded-md border border-slate-200 bg-white shadow-flyout p-1.5 focus:outline-none"
+          className="z-50 min-w-[240px] rounded border border-neutral-40 bg-white shadow-flyout p-1.5 focus:outline-none"
         >
-          <div className="px-2.5 py-1.5 text-[10px] font-semibold tracking-wide text-slate-400 uppercase">
+          <div className="px-2.5 py-1.5 text-[10px] font-semibold tracking-wide text-neutral-90 uppercase">
             {t("topbar.orgSwitcher.title")}
           </div>
           {orgs.map((org) => (
             <DropdownMenu.Item
               key={org.id}
               onSelect={() => notify.info(t("topbar.orgSwitcher.switchedTo", { name: org.name }))}
-              className="flex items-center gap-2 rounded px-2.5 py-2 text-sm outline-none cursor-pointer hover:bg-slate-100"
+              className="flex items-center gap-2 rounded px-2.5 py-2 text-sm outline-none cursor-pointer hover:bg-neutral-20"
             >
-              <Building2 size={16} strokeWidth={1.75} className="text-slate-500" />
+              <Building2 size={16} strokeWidth={1.75} className="text-neutral-130" />
               <span className="flex-1">{org.name}</span>
               {org.id === user.organization.id && (
                 <Check size={14} strokeWidth={2} className="text-brand-600" />

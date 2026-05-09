@@ -25,18 +25,18 @@ export function LanguageSwitcher() {
           type="button"
           title={t("language.switcherTitle")}
           aria-label={t("language.switcherTitle")}
-          className="flex items-center gap-1.5 px-2.5 py-1.5 rounded border border-slate-200 hover:bg-slate-50 transition-colors text-xs text-slate-700"
+          className="flex items-center gap-1.5 px-2.5 py-1.5 rounded border border-neutral-40 hover:bg-neutral-10 transition-colors text-xs text-neutral-160"
         >
-          <Globe size={14} strokeWidth={1.75} className="text-slate-500" />
+          <Globe size={14} strokeWidth={1.75} className="text-neutral-130" />
           <span className="font-medium">{shortLabel}</span>
-          <ChevronDown size={12} strokeWidth={1.75} className="text-slate-400" />
+          <ChevronDown size={12} strokeWidth={1.75} className="text-neutral-90" />
         </button>
       </DropdownMenu.Trigger>
       <DropdownMenu.Portal>
         <DropdownMenu.Content
           align="end"
           sideOffset={6}
-          className="z-50 min-w-[180px] rounded-md border border-slate-200 bg-white shadow-flyout p-1.5 focus:outline-none"
+          className="z-50 min-w-[180px] rounded border border-neutral-40 bg-white shadow-flyout p-1.5 focus:outline-none"
         >
           {SUPPORTED_LANGUAGES.map((lng) => (
             <DropdownMenu.Item
@@ -46,7 +46,7 @@ export function LanguageSwitcher() {
                 "flex items-center gap-2 rounded px-2.5 py-2 text-sm outline-none cursor-pointer",
                 lng === active
                   ? "bg-brand-50 text-brand-700 font-medium"
-                  : "text-slate-700 hover:bg-slate-100",
+                  : "text-neutral-160 hover:bg-neutral-20",
               )}
             >
               <span className="flex-1">{LANGUAGE_LABELS[lng]}</span>

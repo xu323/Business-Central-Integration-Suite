@@ -49,22 +49,22 @@ export function AlertDialog({
   return (
     <RadixAlertDialog.Root open={open} onOpenChange={onOpenChange}>
       <RadixAlertDialog.Portal>
-        <RadixAlertDialog.Overlay className="fixed inset-0 z-40 bg-slate-900/40 backdrop-blur-sm data-[state=open]:animate-in data-[state=open]:fade-in" />
-        <RadixAlertDialog.Content className="fixed left-1/2 top-1/2 z-50 w-[min(480px,calc(100vw-2rem))] -translate-x-1/2 -translate-y-1/2 rounded-md border border-slate-200 bg-white shadow-flyout focus:outline-none data-[state=open]:animate-in data-[state=open]:fade-in data-[state=open]:zoom-in-95">
+        <RadixAlertDialog.Overlay className="fixed inset-0 z-40 bg-neutral-190/40 backdrop-blur-sm data-[state=open]:animate-in data-[state=open]:fade-in" />
+        <RadixAlertDialog.Content className="fixed left-1/2 top-1/2 z-50 w-[min(480px,calc(100vw-2rem))] -translate-x-1/2 -translate-y-1/2 rounded border border-neutral-40 bg-white shadow-flyout focus:outline-none data-[state=open]:animate-in data-[state=open]:fade-in data-[state=open]:zoom-in-95">
           <div className="p-5 space-y-4">
             <div className="flex items-start gap-3">
               {destructive && (
-                <div className="rounded-full bg-rose-50 p-2 text-rose-600">
+                <div className="rounded-full bg-danger-bg p-2 text-danger">
                   <AlertTriangle size={18} strokeWidth={1.75} />
                 </div>
               )}
               <div className="flex-1">
-                <RadixAlertDialog.Title className="text-base font-semibold text-slate-900">
+                <RadixAlertDialog.Title className="text-base font-semibold text-neutral-190">
                   {title}
                 </RadixAlertDialog.Title>
                 {description && (
                   <RadixAlertDialog.Description asChild>
-                    <div className="mt-1.5 text-sm text-slate-600">{description}</div>
+                    <div className="mt-1.5 text-sm text-neutral-130">{description}</div>
                   </RadixAlertDialog.Description>
                 )}
               </div>
@@ -72,7 +72,7 @@ export function AlertDialog({
 
             {requiresConfirmation && (
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                <label className="block text-xs font-semibold text-neutral-160 mb-1">
                   {confirmationLabel ??
                     t("dialog.typeToConfirm", { value: confirmationText })}
                 </label>
@@ -80,7 +80,7 @@ export function AlertDialog({
                   type="text"
                   value={typed}
                   onChange={(e) => setTyped(e.target.value)}
-                  className="w-full rounded border border-slate-300 px-3 py-2 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+                  className="w-full rounded border border-neutral-60 px-3 py-2 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent"
                   autoFocus
                   spellCheck={false}
                   autoComplete="off"

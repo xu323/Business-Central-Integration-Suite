@@ -11,17 +11,17 @@ interface BadgeStyle {
 }
 
 const REQUEST_STYLES: Record<RequestStatus, BadgeStyle> = {
-  Draft:     { bg: "bg-slate-100",   text: "text-slate-700",   dot: "bg-slate-400" },
-  Submitted: { bg: "bg-amber-100",   text: "text-amber-800",   dot: "bg-amber-500" },
-  Approved:  { bg: "bg-emerald-100", text: "text-emerald-800", dot: "bg-emerald-500" },
-  Rejected:  { bg: "bg-rose-100",    text: "text-rose-800",    dot: "bg-rose-500" },
+  Draft:     { bg: "bg-neutral-20",   text: "text-neutral-160",   dot: "bg-neutral-90" },
+  Submitted: { bg: "bg-warning-bg",   text: "text-warning",   dot: "bg-warning" },
+  Approved:  { bg: "bg-success-bg", text: "text-success", dot: "bg-success" },
+  Rejected:  { bg: "bg-danger-bg",    text: "text-danger",    dot: "bg-danger" },
   Synced:    { bg: "bg-brand-100",   text: "text-brand-700",   dot: "bg-brand-500" },
 };
 
 const SYNC_STYLES: Record<SyncStatus, BadgeStyle> = {
-  Pending: { bg: "bg-amber-100",   text: "text-amber-800",   dot: "bg-amber-500" },
-  Success: { bg: "bg-emerald-100", text: "text-emerald-800", dot: "bg-emerald-500" },
-  Failed:  { bg: "bg-rose-100",    text: "text-rose-800",    dot: "bg-rose-500" },
+  Pending: { bg: "bg-warning-bg",   text: "text-warning",   dot: "bg-warning" },
+  Success: { bg: "bg-success-bg", text: "text-success", dot: "bg-success" },
+  Failed:  { bg: "bg-danger-bg",    text: "text-danger",    dot: "bg-danger" },
 };
 
 export function StatusBadge({ status }: { status: RequestStatus }) {
@@ -48,9 +48,9 @@ export function SyncStatusBadge({ status }: { status: SyncStatus }) {
 
 export function HighRiskBadge({ value }: { value: boolean }) {
   const { t } = useTranslation();
-  if (!value) return <span className="text-xs text-slate-400">—</span>;
+  if (!value) return <span className="text-xs text-neutral-90">—</span>;
   return (
-    <span className="badge inline-flex items-center gap-1 bg-rose-100 text-rose-800">
+    <span className="badge inline-flex items-center gap-1 bg-danger-bg text-danger">
       <AlertTriangle size={12} strokeWidth={2} />
       {t("highRisk.badge")}
     </span>

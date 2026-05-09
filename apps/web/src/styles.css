@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+/* =============================================================
+ * Microsoft Fluent 2 / Dynamics 365 Business Central tokens.
+ * Segoe UI Variable is the system font on Windows 11; on other
+ * platforms the stack falls through to Microsoft JhengHei UI
+ * (Traditional Chinese), Yu Gothic UI (Japanese), and finally
+ * system-ui.
+ * ============================================================= */
+
 @layer base {
   html,
   body,
@@ -9,39 +17,113 @@
     height: 100%;
   }
   body {
-    font-family: "Inter", "Segoe UI", "Microsoft JhengHei", sans-serif;
+    font-family:
+      "Segoe UI Variable Display",
+      "Segoe UI Variable",
+      "Segoe UI",
+      "Microsoft JhengHei UI",
+      "Microsoft JhengHei",
+      "Yu Gothic UI",
+      system-ui,
+      sans-serif;
+    background-color: theme("colors.neutral.10");
+    color: theme("colors.neutral.190");
     -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  /* Stealth focus ring: 2px brand outline + 2px white offset. */
+  :focus-visible {
+    outline: 2px solid theme("colors.brand.500");
+    outline-offset: 2px;
+  }
+  /* Inputs/textareas/selects use a tighter inline ring. */
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible {
+    outline: none;
+    border-color: theme("colors.brand.500");
+    box-shadow: 0 0 0 1px theme("colors.brand.500");
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
 
 @layer components {
   .card {
-    @apply bg-white border border-slate-200 rounded-xl shadow-card;
+    @apply bg-white border border-neutral-40 rounded shadow-card;
   }
+
+  /* ---------- Buttons ---------- */
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm font-medium
-           transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply inline-flex items-center justify-center gap-1.5 rounded
+           px-3 h-8 min-w-[2rem] text-sm font-semibold
+           transition-colors disabled:cursor-not-allowed select-none;
   }
   .btn-primary {
-    @apply btn bg-brand-600 text-white hover:bg-brand-700;
+    @apply btn bg-brand-500 text-white
+           hover:bg-brand-600 active:bg-brand-700
+           disabled:bg-neutral-30 disabled:text-neutral-90;
   }
+  .btn-secondary,
   .btn-outline {
-    @apply btn border border-slate-300 text-slate-700 hover:bg-slate-100;
+    @apply btn bg-white border border-neutral-40 text-neutral-190
+           hover:bg-neutral-20 active:bg-neutral-30
+           disabled:bg-neutral-20 disabled:text-neutral-90 disabled:border-neutral-30;
+  }
+  .btn-subtle {
+    @apply btn bg-transparent text-neutral-190
+           hover:bg-neutral-20 active:bg-neutral-30
+           disabled:text-neutral-90;
   }
   .btn-success {
-    @apply btn bg-emerald-600 text-white hover:bg-emerald-700;
+    @apply btn bg-success text-white
+           hover:brightness-110 active:brightness-95
+           disabled:bg-neutral-30 disabled:text-neutral-90;
   }
   .btn-danger {
-    @apply btn bg-rose-600 text-white hover:bg-rose-700;
+    @apply btn bg-danger text-white
+           hover:brightness-110 active:brightness-95
+           disabled:bg-neutral-30 disabled:text-neutral-90;
   }
+
+  /* ---------- Inputs ---------- */
   .input {
-    @apply w-full rounded-lg border border-slate-300 px-3 py-2 text-sm
-           focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent;
+    @apply w-full rounded border border-neutral-40 bg-white
+           px-3 h-8 text-sm text-neutral-190
+           placeholder-neutral-90
+           focus:outline-none
+           disabled:bg-neutral-20 disabled:text-neutral-130 disabled:cursor-not-allowed;
   }
+  textarea.input {
+    @apply h-auto py-2;
+  }
+  /* Labels: sentence-case, semibold, no uppercase tracking. */
   .label {
-    @apply block text-xs font-medium text-slate-600 mb-1 uppercase tracking-wide;
+    @apply block text-xs font-semibold text-neutral-160 mb-1;
   }
+  .label-required::after {
+    content: " *";
+    color: theme("colors.danger.DEFAULT");
+    font-weight: 700;
+  }
+  .field-error {
+    @apply mt-1 text-xs font-medium text-danger inline-flex items-center gap-1;
+  }
+
+  /* ---------- Badges ---------- */
   .badge {
-    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium;
+    @apply inline-flex items-center rounded px-2 py-0.5
+           text-[11px] leading-tight font-semibold;
   }
+
+  /* ---------- Density helpers ---------- */
+  .row-compact     { height: 28px; }
+  .row-standard    { height: 36px; }
+  .row-comfortable { height: 44px; }
 }

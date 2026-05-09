@@ -8,7 +8,7 @@ export function Skeleton({ className }: Props) {
   return (
     <div
       className={cn(
-        "animate-pulse rounded-md bg-slate-200/70",
+        "animate-pulse rounded bg-neutral-40/70",
         className,
       )}
       aria-hidden
@@ -61,12 +61,12 @@ interface TableSkeletonProps {
 export function TableSkeleton({ rows = 10, columns = 8 }: TableSkeletonProps) {
   return (
     <div className="card overflow-hidden" aria-busy="true">
-      <div className="border-b border-slate-200 bg-slate-50 px-4 py-3 flex gap-4">
+      <div className="border-b border-neutral-40 bg-neutral-10 px-4 py-3 flex gap-4">
         {Array.from({ length: columns }).map((_, i) => (
           <Skeleton key={i} className="h-3 flex-1" />
         ))}
       </div>
-      <div className="divide-y divide-slate-100">
+      <div className="divide-y divide-neutral-20">
         {Array.from({ length: rows }).map((_, r) => (
           <div key={r} className="px-4 py-3 flex items-center gap-4">
             {Array.from({ length: columns }).map((_, c) => (

@@ -45,27 +45,27 @@ export class ErrorBoundary extends Component<Props, State> {
     if (!this.state.hasError) return this.props.children;
 
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50 px-4 font-sans">
+      <div className="min-h-screen flex items-center justify-center bg-neutral-10 px-4 font-sans">
         <div className="card max-w-lg w-full p-8 space-y-5">
           <div className="flex items-start gap-3">
-            <div className="rounded-full bg-rose-50 p-2.5 text-rose-600">
+            <div className="rounded-full bg-danger-bg p-2.5 text-danger">
               <AlertOctagon size={22} strokeWidth={1.75} />
             </div>
             <div className="flex-1 space-y-1">
-              <h1 className="text-lg font-semibold text-slate-900">
+              <h1 className="text-lg font-semibold text-neutral-190">
                 系統發生未預期錯誤
               </h1>
-              <p className="text-sm text-slate-600">
+              <p className="text-sm text-neutral-130">
                 請將以下追蹤碼提供給支援團隊以加速處理。
               </p>
             </div>
           </div>
 
-          <div className="rounded border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-mono break-all">
-            <div className="text-slate-500">Ticket ID</div>
-            <div className="text-slate-900">{this.state.ticketId}</div>
-            <div className="mt-2 text-slate-500">Message</div>
-            <div className="text-rose-700">{this.state.message}</div>
+          <div className="rounded border border-neutral-40 bg-neutral-10 px-3 py-2 text-xs font-mono break-all">
+            <div className="text-neutral-130">Ticket ID</div>
+            <div className="text-neutral-190">{this.state.ticketId}</div>
+            <div className="mt-2 text-neutral-130">Message</div>
+            <div className="text-danger">{this.state.message}</div>
           </div>
 
           <div className="grid grid-cols-3 gap-2">

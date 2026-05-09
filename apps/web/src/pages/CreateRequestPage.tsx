@@ -80,10 +80,10 @@ export function CreateRequestPage() {
   return (
     <div className="space-y-4 max-w-4xl">
       <div>
-        <h2 className="text-xl font-semibold text-slate-800">{t("create.title")}</h2>
-        <p className="text-sm text-slate-500 mt-1">{t("create.subtitle")}</p>
+        <h2 className="text-xl font-semibold text-neutral-190">{t("create.title")}</h2>
+        <p className="text-sm text-neutral-130 mt-1">{t("create.subtitle")}</p>
         {user && (
-          <p className="text-xs text-slate-500 mt-1.5">
+          <p className="text-xs text-neutral-130 mt-1.5">
             {t("create.identityHint", { name: user.name })}
           </p>
         )}
@@ -93,7 +93,7 @@ export function CreateRequestPage() {
         <div className="card p-5 space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="label">{t("create.fields.description")}</label>
+              <label className="label label-required">{t("create.fields.description")}</label>
               <input
                 className="input"
                 value={form.description}
@@ -114,7 +114,7 @@ export function CreateRequestPage() {
             <div>
               <label className="label">{t("create.fields.requester")}</label>
               <input
-                className="input bg-slate-50 cursor-not-allowed"
+                className="input bg-neutral-10 cursor-not-allowed"
                 value={user?.name ?? ""}
                 readOnly
                 disabled
@@ -173,7 +173,7 @@ export function CreateRequestPage() {
 
         <div className="card p-5 space-y-3">
           <div className="flex items-center justify-between">
-            <h3 className="text-sm font-semibold text-slate-700">{t("create.lines")}</h3>
+            <h3 className="text-sm font-semibold text-neutral-160">{t("create.lines")}</h3>
             <button
               type="button"
               className="btn-outline"
@@ -185,8 +185,8 @@ export function CreateRequestPage() {
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
-              <thead className="text-xs font-semibold text-slate-500">
-                <tr className="border-b border-slate-100">
+              <thead className="text-xs font-semibold text-neutral-130">
+                <tr className="border-b border-neutral-20">
                   <th className="text-left py-2">{t("create.lineColumns.itemNo")}</th>
                   <th className="text-left py-2">{t("create.lineColumns.description")}</th>
                   <th className="text-right py-2">{t("create.lineColumns.quantity")}</th>
@@ -200,7 +200,7 @@ export function CreateRequestPage() {
                 {lines.map((line, idx) => {
                   const amount = line.quantity * line.unit_price;
                   return (
-                    <tr key={idx} className="border-t border-slate-100">
+                    <tr key={idx} className="border-t border-neutral-20">
                       <td className="py-2 pr-2">
                         <input
                           className="input"
@@ -248,7 +248,7 @@ export function CreateRequestPage() {
                         {lines.length > 1 && (
                           <button
                             type="button"
-                            className="text-rose-500 hover:bg-rose-50 rounded p-1.5"
+                            className="text-danger hover:bg-danger-bg rounded p-1.5"
                             title={t("create.remove")}
                             onClick={() => setLines(lines.filter((_, i) => i !== idx))}
                           >
@@ -261,8 +261,8 @@ export function CreateRequestPage() {
                 })}
               </tbody>
               <tfoot>
-                <tr className={cn("border-t-2 border-slate-200 font-semibold")}>
-                  <td colSpan={5} className="py-3 text-right text-slate-600">
+                <tr className={cn("border-t-2 border-neutral-40 font-semibold")}>
+                  <td colSpan={5} className="py-3 text-right text-neutral-130">
                     {t("create.total")}
                   </td>
                   <td className="py-3 text-right">{total.toLocaleString()}</td>
