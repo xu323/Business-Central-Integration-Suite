@@ -1,8 +1,13 @@
+import { Plus, Search, Trash2, X } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
+import { useCurrentUser } from "@/auth/useCurrentUser";
+import { InlineSpinner } from "@/components/Spinner";
 import { api } from "@/lib/api";
+import { cn } from "@/lib/cn";
+import { formatError, notify } from "@/lib/notify";
 
 interface LineForm {
   item_no: string;
@@ -23,14 +28,13 @@ const emptyLine = (): LineForm => ({
 export function CreateRequestPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [error, setError] = useState<string>("");
+  const user = useCurrentUser();
   const [submitting, setSubmitting] = useState(false);
   const [form, setForm] = useState({
     description: "",
-    requester: "demo.user",
-    department: "IT",
-    vendor_no: "V0001",
-    vendor_name: "Acme IT Supplies",
+    department: user?.department ?? "",
+    vendor_no: "",
+    vendor_name: "",
     currency_code: "TWD",
     required_date: "",
   });
@@ -42,11 +46,13 @@ export function CreateRequestPage() {
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!user) return;
     setSubmitting(true);
-    setError("");
     try {
       const payload = {
         ...form,
+        requester: user.id,
+        vendor_name: form.vendor_name,
         required_date: form.required_date ? new Date(form.required_date).toISOString() : null,
         lines: lines.map((line, idx) => ({
           line_no: (idx + 1) * 10000,
@@ -54,9 +60,16 @@ export function CreateRequestPage() {
         })),
       };
       const created = await api.createRequest(payload);
+      notify.success(t("notify.created", { number: created.number }), {
+        action: {
+          label: t("notify.viewAction"),
+          onClick: () => navigate(`/requests/${created.id}`),
+        },
+      });
       navigate(`/requests/${created.id}`);
     } catch (err) {
-      setError((err as Error).message);
+      const { code, message } = formatError(err);
+      notify.error(t("notify.errorWithCode", { code, message }));
     } finally {
       setSubmitting(false);
     }
@@ -69,13 +82,12 @@ export function CreateRequestPage() {
       <div>
         <h2 className="text-xl font-semibold text-slate-800">{t("create.title")}</h2>
         <p className="text-sm text-slate-500 mt-1">{t("create.subtitle")}</p>
+        {user && (
+          <p className="text-xs text-slate-500 mt-1.5">
+            {t("create.identityHint", { name: user.name })}
+          </p>
+        )}
       </div>
-
-      {error && (
-        <div className="card p-4 border-rose-200 bg-rose-50 text-rose-700 text-sm">
-          {t("create.submitError", { message: error })}
-        </div>
-      )}
 
       <form onSubmit={onSubmit} className="space-y-4">
         <div className="card p-5 space-y-4">
@@ -102,9 +114,11 @@ export function CreateRequestPage() {
             <div>
               <label className="label">{t("create.fields.requester")}</label>
               <input
-                className="input"
-                value={form.requester}
-                onChange={(e) => setForm({ ...form, requester: e.target.value })}
+                className="input bg-slate-50 cursor-not-allowed"
+                value={user?.name ?? ""}
+                readOnly
+                disabled
+                aria-label={t("create.fields.requester")}
               />
             </div>
             <div>
@@ -115,21 +129,36 @@ export function CreateRequestPage() {
                 onChange={(e) => setForm({ ...form, department: e.target.value })}
               />
             </div>
-            <div>
-              <label className="label">{t("create.fields.vendorNo")}</label>
-              <input
-                className="input"
-                value={form.vendor_no}
-                onChange={(e) => setForm({ ...form, vendor_no: e.target.value })}
-              />
-            </div>
-            <div>
-              <label className="label">{t("create.fields.vendorName")}</label>
-              <input
-                className="input"
-                value={form.vendor_name}
-                onChange={(e) => setForm({ ...form, vendor_name: e.target.value })}
-              />
+            <div className="md:col-span-2 grid grid-cols-1 md:grid-cols-[1fr_2fr_auto] gap-2 items-end">
+              <div>
+                <label className="label">{t("create.fields.vendorNo")}</label>
+                <input
+                  className="input"
+                  value={form.vendor_no}
+                  onChange={(e) => setForm({ ...form, vendor_no: e.target.value })}
+                />
+              </div>
+              <div>
+                <label className="label">{t("create.fields.vendorName")}</label>
+                <input
+                  className="input"
+                  value={form.vendor_name}
+                  onChange={(e) => setForm({ ...form, vendor_name: e.target.value })}
+                  placeholder={t("create.placeholders.vendorSearch")}
+                />
+              </div>
+              <button
+                type="button"
+                className="btn-outline h-[38px]"
+                title={t("common.search")}
+                onClick={() =>
+                  // TODO: backend endpoint /api/vendors/search — Phase 4 will replace with VendorLookupDialog
+                  notify.info(t("common.search"), { description: t("common.featureStub") })
+                }
+              >
+                <Search size={16} strokeWidth={1.75} />
+                {t("common.search")}
+              </button>
             </div>
             <div>
               <label className="label">{t("create.fields.currency")}</label>
@@ -150,13 +179,14 @@ export function CreateRequestPage() {
               className="btn-outline"
               onClick={() => setLines([...lines, emptyLine()])}
             >
+              <Plus size={14} strokeWidth={1.75} />
               {t("create.addLine")}
             </button>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
-              <thead className="text-xs uppercase tracking-wide text-slate-500">
-                <tr>
+              <thead className="text-xs font-semibold text-slate-500">
+                <tr className="border-b border-slate-100">
                   <th className="text-left py-2">{t("create.lineColumns.itemNo")}</th>
                   <th className="text-left py-2">{t("create.lineColumns.description")}</th>
                   <th className="text-right py-2">{t("create.lineColumns.quantity")}</th>
@@ -218,10 +248,11 @@ export function CreateRequestPage() {
                         {lines.length > 1 && (
                           <button
                             type="button"
-                            className="text-rose-500 text-xs hover:underline"
+                            className="text-rose-500 hover:bg-rose-50 rounded p-1.5"
+                            title={t("create.remove")}
                             onClick={() => setLines(lines.filter((_, i) => i !== idx))}
                           >
-                            {t("create.remove")}
+                            <Trash2 size={14} strokeWidth={1.75} />
                           </button>
                         )}
                       </td>
@@ -230,7 +261,7 @@ export function CreateRequestPage() {
                 })}
               </tbody>
               <tfoot>
-                <tr className="border-t-2 border-slate-200 font-semibold">
+                <tr className={cn("border-t-2 border-slate-200 font-semibold")}>
                   <td colSpan={5} className="py-3 text-right text-slate-600">
                     {t("create.total")}
                   </td>
@@ -249,9 +280,11 @@ export function CreateRequestPage() {
             onClick={() => navigate(-1)}
             disabled={submitting}
           >
+            <X size={14} strokeWidth={1.75} />
             {t("create.cancel")}
           </button>
-          <button type="submit" className="btn-primary" disabled={submitting}>
+          <button type="submit" className="btn-primary" disabled={submitting || !user}>
+            {submitting && <InlineSpinner />}
             {submitting ? t("create.saving") : t("create.saveDraft")}
           </button>
         </div>

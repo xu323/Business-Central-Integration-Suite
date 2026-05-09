@@ -1,28 +1,50 @@
+import * as Tooltip from "@radix-ui/react-tooltip";
+import {
+  ArrowLeft,
+  Check,
+  RefreshCw,
+  SendHorizontal,
+  Trash2,
+  X,
+} from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
-import { Spinner } from "@/components/Spinner";
-import { HighRiskBadge, StatusBadge, SyncStatusBadge } from "@/components/StatusBadge";
+import { hasRole, useCurrentUser, type UserRole } from "@/auth/useCurrentUser";
+import { Avatar } from "@/components/Avatar";
+import { InlineSpinner } from "@/components/Spinner";
+import {
+  HighRiskBadge,
+  StatusBadge,
+  SyncStatusBadge,
+} from "@/components/StatusBadge";
+import { AlertDialog } from "@/components/ui/AlertDialog";
+import { DetailSkeleton } from "@/components/ui/Skeleton";
 import { api } from "@/lib/api";
+import { cn } from "@/lib/cn";
 import { formatCurrency, formatDate } from "@/lib/format";
+import { formatError, notify } from "@/lib/notify";
 import type { AuditLog, PurchaseRequest } from "@/types";
+
+type WorkflowOp = "submit" | "approve" | "reject" | "sync";
 
 export function RequestDetailPage() {
   const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const user = useCurrentUser();
+
   const [request, setRequest] = useState<PurchaseRequest | null>(null);
   const [logs, setLogs] = useState<AuditLog[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string>("");
-  const [actor, setActor] = useState<string>("manager");
   const [comment, setComment] = useState<string>("");
   const [busy, setBusy] = useState<string>("");
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   const refresh = useCallback(async () => {
     if (!id) return;
-    setError("");
     try {
       const [r, l] = await Promise.all([
         api.getRequest(id),
@@ -31,59 +53,68 @@ export function RequestDetailPage() {
       setRequest(r);
       setLogs(l);
     } catch (e) {
-      setError((e as Error).message);
+      const { code, message } = formatError(e);
+      notify.error(t("notify.errorWithCode", { code, message }));
     } finally {
       setLoading(false);
     }
-  }, [id]);
+  }, [id, t]);
 
   useEffect(() => {
     void refresh();
   }, [refresh]);
 
-  const action = async (op: "submit" | "approve" | "reject" | "sync" | "delete") => {
-    if (!request) return;
+  const action = async (op: WorkflowOp) => {
+    if (!request || !user) return;
     setBusy(op);
-    setError("");
     try {
+      let updated: PurchaseRequest;
       switch (op) {
         case "submit":
-          await api.submitRequest(request.id, actor || request.requester);
+          updated = await api.submitRequest(request.id, user.id);
+          notify.success(t("notify.submitted", { number: updated.number }));
           break;
         case "approve":
-          await api.approveRequest(request.id, actor || "approver", comment);
+          updated = await api.approveRequest(request.id, user.id, comment);
+          notify.success(t("notify.approved", { number: updated.number }));
           break;
         case "reject":
-          await api.rejectRequest(request.id, actor || "approver", comment);
+          updated = await api.rejectRequest(request.id, user.id, comment);
+          notify.success(t("notify.rejected", { number: updated.number }));
           break;
         case "sync":
-          await api.syncRequest(request.id);
+          updated = await api.syncRequest(request.id);
+          notify.success(t("notify.synced", { number: updated.number }));
           break;
-        case "delete":
-          if (!confirm(t("detail.deleteConfirm"))) {
-            setBusy("");
-            return;
-          }
-          await api.deleteRequest(request.id);
-          navigate("/requests");
-          return;
       }
       await refresh();
     } catch (e) {
-      setError((e as Error).message);
+      const { code, message } = formatError(e);
+      notify.error(t("notify.errorWithCode", { code, message }), {
+        action: { label: t("notify.retryAction"), onClick: () => void action(op) },
+      });
     } finally {
       setBusy("");
     }
   };
 
-  if (loading) return <Spinner />;
-  if (error && !request) {
-    return (
-      <div className="card p-6 border-rose-200 bg-rose-50 text-rose-700">
-        {t("detail.loadError", { message: error })}
-      </div>
-    );
-  }
+  const onDelete = async () => {
+    if (!request) return;
+    setDeleting(true);
+    try {
+      await api.deleteRequest(request.id);
+      notify.success(t("notify.deleted", { number: request.number }));
+      navigate("/requests");
+    } catch (e) {
+      const { code, message } = formatError(e);
+      notify.error(t("notify.errorWithCode", { code, message }));
+    } finally {
+      setDeleting(false);
+      setDeleteOpen(false);
+    }
+  };
+
+  if (loading) return <DetailSkeleton />;
   if (!request) return null;
 
   const canSubmit = request.status === "Draft";
@@ -91,14 +122,21 @@ export function RequestDetailPage() {
   const canSync = request.status === "Approved";
   const canDelete = request.status === "Draft" || request.status === "Rejected";
 
+  const isApprover = hasRole(user, "Approver");
+  const isRequester = hasRole(user, "Requester") || hasRole(user, "Admin");
+
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between gap-3 flex-wrap">
         <div>
-          <Link to="/requests" className="text-xs text-brand-600 hover:underline">
+          <Link
+            to="/requests"
+            className="inline-flex items-center gap-1 text-xs text-brand-600 hover:underline"
+          >
+            <ArrowLeft size={12} strokeWidth={1.75} />
             {t("detail.back")}
           </Link>
-          <h2 className="text-xl font-semibold text-slate-800 mt-1 flex items-center gap-3">
+          <h2 className="text-xl font-semibold text-slate-800 mt-1 flex items-center gap-3 flex-wrap">
             {request.number}
             <StatusBadge status={request.status} />
             {request.high_risk && <HighRiskBadge value />}
@@ -112,12 +150,6 @@ export function RequestDetailPage() {
           </div>
         </div>
       </div>
-
-      {error && (
-        <div className="card p-4 border-rose-200 bg-rose-50 text-rose-700 text-sm">
-          {t("detail.actionError", { message: error })}
-        </div>
-      )}
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <div className="card p-5 lg:col-span-2 space-y-4">
@@ -142,8 +174,8 @@ export function RequestDetailPage() {
           <div>
             <h3 className="text-sm font-semibold text-slate-700 mb-2">{t("detail.lines")}</h3>
             <table className="w-full text-sm">
-              <thead className="text-xs uppercase tracking-wide text-slate-500">
-                <tr>
+              <thead className="text-xs font-semibold text-slate-500">
+                <tr className="border-b border-slate-100">
                   <th className="text-left py-2">{t("detail.lineColumns.item")}</th>
                   <th className="text-left py-2">{t("detail.lineColumns.description")}</th>
                   <th className="text-right py-2">{t("detail.lineColumns.qty")}</th>
@@ -168,61 +200,92 @@ export function RequestDetailPage() {
           </div>
         </div>
 
-        <div className="card p-5 space-y-4">
-          <h3 className="text-sm font-semibold text-slate-700">{t("detail.workflowActions")}</h3>
-          <div>
-            <label className="label">{t("detail.actor")}</label>
-            <input className="input" value={actor} onChange={(e) => setActor(e.target.value)} />
-          </div>
-          <div>
-            <label className="label">{t("detail.comment")}</label>
-            <textarea
-              className="input min-h-[80px]"
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
-            />
-          </div>
-          <div className="grid grid-cols-2 gap-2">
-            <button
-              className="btn-primary col-span-2"
-              disabled={!canSubmit || busy !== ""}
-              onClick={() => action("submit")}
-            >
-              {busy === "submit" ? "…" : t("detail.submit")}
-            </button>
-            <button
-              className="btn-success"
-              disabled={!canDecide || busy !== ""}
-              onClick={() => action("approve")}
-            >
-              {busy === "approve" ? "…" : t("detail.approve")}
-            </button>
-            <button
-              className="btn-danger"
-              disabled={!canDecide || busy !== ""}
-              onClick={() => action("reject")}
-            >
-              {busy === "reject" ? "…" : t("detail.reject")}
-            </button>
-            <button
-              className="btn-outline col-span-2"
-              disabled={!canSync || busy !== ""}
-              onClick={() => action("sync")}
-            >
-              {busy === "sync" ? "…" : t("detail.syncToBC")}
-            </button>
-            {canDelete && (
-              <button
-                className="btn-outline col-span-2 text-rose-600 border-rose-200 hover:bg-rose-50"
-                disabled={busy !== ""}
-                onClick={() => action("delete")}
-              >
-                {t("detail.delete")}
-              </button>
+        <Tooltip.Provider delayDuration={200}>
+          <div className="card p-5 space-y-4">
+            <h3 className="text-sm font-semibold text-slate-700">{t("detail.workflowActions")}</h3>
+
+            {user && (
+              <div className="rounded border border-brand-100 bg-brand-50 px-3 py-2 flex items-center gap-2">
+                <Avatar id={user.id} name={user.name} size="sm" />
+                <div className="text-xs text-slate-700 leading-tight">
+                  <div className="font-medium">{user.name}</div>
+                  <div className="text-slate-500">
+                    {t("detail.identityHint", {
+                      name: user.name,
+                      roles: user.roles.join(" · "),
+                    })}
+                  </div>
+                </div>
+              </div>
             )}
+
+            <div>
+              <label className="label">{t("detail.comment")}</label>
+              <textarea
+                className="input min-h-[80px]"
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                placeholder={t("detail.commentPlaceholder")}
+              />
+            </div>
+
+            <div className="grid grid-cols-2 gap-2">
+              <ActionButton
+                className="btn-primary col-span-2"
+                disabled={!canSubmit || !isRequester || busy !== ""}
+                requireRole={!isRequester ? ("Requester" as UserRole) : null}
+                onClick={() => action("submit")}
+                busy={busy === "submit"}
+              >
+                <SendHorizontal size={14} strokeWidth={1.75} />
+                {t("detail.submit")}
+              </ActionButton>
+              <ActionButton
+                className="btn-success"
+                disabled={!canDecide || !isApprover || busy !== ""}
+                requireRole={!isApprover ? ("Approver" as UserRole) : null}
+                onClick={() => action("approve")}
+                busy={busy === "approve"}
+              >
+                <Check size={14} strokeWidth={2} />
+                {t("detail.approve")}
+              </ActionButton>
+              <ActionButton
+                className="btn-danger"
+                disabled={!canDecide || !isApprover || busy !== ""}
+                requireRole={!isApprover ? ("Approver" as UserRole) : null}
+                onClick={() => action("reject")}
+                busy={busy === "reject"}
+              >
+                <X size={14} strokeWidth={2} />
+                {t("detail.reject")}
+              </ActionButton>
+              <ActionButton
+                className="btn-outline col-span-2"
+                disabled={!canSync || busy !== ""}
+                requireRole={null}
+                onClick={() => action("sync")}
+                busy={busy === "sync"}
+              >
+                <RefreshCw size={14} strokeWidth={1.75} className={cn(busy === "sync" && "animate-spin")} />
+                {t("detail.syncToBC")}
+              </ActionButton>
+              {canDelete && (
+                <button
+                  type="button"
+                  className="btn-outline col-span-2 text-rose-600 border-rose-200 hover:bg-rose-50"
+                  disabled={busy !== ""}
+                  onClick={() => setDeleteOpen(true)}
+                >
+                  <Trash2 size={14} strokeWidth={1.75} />
+                  {t("detail.delete")}
+                </button>
+              )}
+            </div>
+
+            <p className="text-xs text-slate-500">{t("detail.transitionsHint")}</p>
           </div>
-          <p className="text-xs text-slate-500">{t("detail.transitionsHint")}</p>
-        </div>
+        </Tooltip.Provider>
       </div>
 
       <div className="card p-5">
@@ -231,8 +294,8 @@ export function RequestDetailPage() {
           <div className="text-sm text-slate-500">{t("detail.noAuditEntries")}</div>
         ) : (
           <table className="w-full text-sm">
-            <thead className="text-xs uppercase tracking-wide text-slate-500">
-              <tr>
+            <thead className="text-xs font-semibold text-slate-500">
+              <tr className="border-b border-slate-100">
                 <th className="text-left py-2">{t("detail.auditColumns.time")}</th>
                 <th className="text-left py-2">{t("detail.auditColumns.actor")}</th>
                 <th className="text-left py-2">{t("detail.auditColumns.action")}</th>
@@ -256,6 +319,23 @@ export function RequestDetailPage() {
           </table>
         )}
       </div>
+
+      <AlertDialog
+        open={deleteOpen}
+        onOpenChange={setDeleteOpen}
+        title={t("detail.deleteDialog.title")}
+        description={t("detail.deleteDialog.body", {
+          number: request.number,
+          amount: formatCurrency(request.total_amount, request.currency_code),
+          lineCount: request.lines.length,
+        })}
+        destructive
+        confirmationText={request.number}
+        confirmationLabel={t("detail.deleteDialog.confirmation", { number: request.number })}
+        confirmLabel={t("detail.deleteDialog.confirm")}
+        loading={deleting}
+        onConfirm={onDelete}
+      />
     </div>
   );
 }
@@ -263,8 +343,48 @@ export function RequestDetailPage() {
 function Field({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <div className="text-xs uppercase tracking-wide text-slate-500">{label}</div>
+      <div className="text-xs font-semibold text-slate-500">{label}</div>
       <div className="mt-0.5 text-slate-800 break-words">{value || "—"}</div>
     </div>
+  );
+}
+
+function ActionButton({
+  className,
+  disabled,
+  requireRole,
+  onClick,
+  busy,
+  children,
+}: {
+  className: string;
+  disabled: boolean;
+  requireRole: UserRole | null;
+  onClick: () => void;
+  busy: boolean;
+  children: React.ReactNode;
+}) {
+  const { t } = useTranslation();
+  const button = (
+    <button type="button" className={className} disabled={disabled} onClick={onClick}>
+      {busy ? <InlineSpinner /> : children}
+    </button>
+  );
+  if (!requireRole || !disabled) return button;
+  return (
+    <Tooltip.Root>
+      <Tooltip.Trigger asChild>
+        <span tabIndex={0} className="contents">{button}</span>
+      </Tooltip.Trigger>
+      <Tooltip.Portal>
+        <Tooltip.Content
+          side="top"
+          className="z-50 rounded bg-slate-900 text-white text-xs px-2 py-1 shadow"
+        >
+          {t("detail.roleRequired", { role: requireRole })}
+          <Tooltip.Arrow className="fill-slate-900" />
+        </Tooltip.Content>
+      </Tooltip.Portal>
+    </Tooltip.Root>
   );
 }

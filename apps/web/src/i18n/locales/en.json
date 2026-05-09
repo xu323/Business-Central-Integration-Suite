@@ -11,17 +11,24 @@
     "ok": "OK",
     "actions": "Actions",
     "total": "Total",
-    "viewArrow": "View →",
-    "viewAllArrow": "View all →",
+    "viewArrow": "View",
+    "viewAllArrow": "View all",
     "search": "Search",
-    "errorPrefix": "Error"
+    "errorPrefix": "Error",
+    "featureStub": "Coming in a future release.",
+    "retry": "Retry"
   },
   "language": {
     "label": "Language",
     "switcherTitle": "Switch language",
     "zh-TW": "繁體中文",
     "en": "English",
-    "ja": "日本語"
+    "ja": "日本語",
+    "shortLabel": {
+      "zh-TW": "繁中",
+      "en": "EN",
+      "ja": "日本語"
+    }
   },
   "app": {
     "title": "Business Central Integration Suite",
@@ -41,7 +48,35 @@
   "topbar": {
     "apiHealthy": "API Healthy",
     "apiDown": "API Down",
-    "bcModeLabel": "BC"
+    "bcModeLabel": "BC",
+    "userMenu": {
+      "profile": "Profile",
+      "switchOrg": "Switch organization",
+      "preferences": "Preferences",
+      "signOut": "Sign out"
+    },
+    "notifications": {
+      "title": "Notifications",
+      "empty": "No new notifications"
+    },
+    "orgSwitcher": {
+      "title": "Switch organization",
+      "switchedTo": "Switched to {{name}}"
+    },
+    "commandShortcut": "Command palette"
+  },
+  "commandPalette": {
+    "title": "Command palette",
+    "placeholder": "Type a page or action…",
+    "empty": "No matches found",
+    "viewPendingApproval": "View pending approvals",
+    "groups": {
+      "pages": "Pages",
+      "actions": "Actions"
+    }
+  },
+  "dialog": {
+    "typeToConfirm": "Type \"{{value}}\" to confirm"
   },
   "status": {
     "all": "All",
@@ -57,13 +92,13 @@
     "Failed": "Failed"
   },
   "highRisk": {
-    "badge": "⚠ High-Risk",
+    "badge": "High-Risk",
     "tag": "High-Risk"
   },
   "dashboard": {
     "title": "Overview",
     "subtitle": "Procurement & approval pipeline at a glance.",
-    "newRequest": "➕ New Request",
+    "newRequest": "New Request",
     "totalRequests": "Total Requests",
     "highRiskApprovals": "High-Risk Approvals",
     "openAmount": "Open Amount",
@@ -72,13 +107,13 @@
     "syncHealth": "Sync Health",
     "recentFailures": "Recent failures (7d)",
     "syncedDocuments": "Synced documents",
-    "viewAuditLogs": "View audit logs →",
+    "viewAuditLogs": "View audit logs",
     "loadFailed": "Failed to load dashboard: {{message}}"
   },
   "requestList": {
     "title": "Purchase Requests",
     "summary": "{{count}} requests · total {{amount}}",
-    "newRequest": "➕ New Request",
+    "newRequest": "New Request",
     "searchLabel": "Search",
     "searchPlaceholder": "Description / vendor / requester",
     "statusLabel": "Status",
@@ -92,11 +127,11 @@
       "created": "Created",
       "actions": "Actions"
     },
-    "rowAction": "View →",
+    "rowAction": "View",
     "empty": {
       "title": "No requests yet",
       "description": "Create your first purchase request to start the approval workflow.",
-      "cta": "➕ Create Request"
+      "cta": "Create Request"
     },
     "loadError": "Failed to load: {{message}}"
   },
@@ -114,10 +149,11 @@
     },
     "placeholders": {
       "description": "e.g. Office laptops Q2",
-      "itemNo": "ITEM-XXX"
+      "itemNo": "ITEM-XXX",
+      "vendorSearch": "Use search to pick a vendor"
     },
     "lines": "Lines",
-    "addLine": "➕ Add Line",
+    "addLine": "Add Line",
     "lineColumns": {
       "itemNo": "Item No.",
       "description": "Description",
@@ -131,10 +167,11 @@
     "cancel": "Cancel",
     "saveDraft": "Save as Draft",
     "saving": "Saving…",
-    "submitError": "Failed to create: {{message}}"
+    "submitError": "Failed to create: {{message}}",
+    "identityHint": "Submit using your identity ({{name}})"
   },
   "detail": {
-    "back": "← Back to list",
+    "back": "Back to list",
     "total": "Total",
     "fields": {
       "requester": "Requester",
@@ -159,14 +196,20 @@
       "amount": "Amount"
     },
     "workflowActions": "Workflow Actions",
-    "actor": "Actor",
+    "identityHint": "Acting as {{name}} ({{roles}})",
     "comment": "Comment",
-    "submit": "📨 Submit",
-    "approve": "✓ Approve",
-    "reject": "✗ Reject",
-    "syncToBC": "🔄 Sync to Business Central",
+    "commentPlaceholder": "Add a note for the requester or next approver…",
+    "submit": "Submit",
+    "approve": "Approve",
+    "reject": "Reject",
+    "syncToBC": "Sync to Business Central",
     "delete": "Delete",
-    "deleteConfirm": "Delete this request?",
+    "deleteDialog": {
+      "title": "Confirm deletion",
+      "body": "This action cannot be undone. Request {{number}} ({{amount}}, {{lineCount}} lines) will be permanently deleted.",
+      "confirmation": "Type number {{number}} to confirm deletion",
+      "confirm": "Delete request"
+    },
     "transitionsHint": "Allowed transitions: Draft → Submitted → (Approved | Rejected) → Synced.",
     "auditTrail": "Audit Trail",
     "noAuditEntries": "No audit entries yet.",
@@ -178,7 +221,8 @@
       "error": "Error"
     },
     "actionError": "Action failed: {{message}}",
-    "loadError": "Failed to load: {{message}}"
+    "loadError": "Failed to load: {{message}}",
+    "roleRequired": "{{role}} role required"
   },
   "audit": {
     "title": "Audit Logs",
@@ -193,5 +237,16 @@
     },
     "empty": "No audit logs yet",
     "loadError": "Failed to load: {{message}}"
+  },
+  "notify": {
+    "created": "Request {{number}} created",
+    "submitted": "Request {{number}} submitted for approval",
+    "approved": "Request {{number}} approved",
+    "rejected": "Request {{number}} rejected",
+    "synced": "Request {{number}} synced to Business Central",
+    "deleted": "Request {{number}} deleted",
+    "viewAction": "View",
+    "retryAction": "Retry",
+    "errorWithCode": "[{{code}}] {{message}}"
   }
 }

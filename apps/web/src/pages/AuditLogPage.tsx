@@ -1,26 +1,30 @@
+import { FileSearch } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { EmptyState } from "@/components/EmptyState";
-import { Spinner } from "@/components/Spinner";
+import { TableSkeleton } from "@/components/ui/Skeleton";
 import { SyncStatusBadge } from "@/components/StatusBadge";
 import { api } from "@/lib/api";
 import { formatDate } from "@/lib/format";
+import { formatError, notify } from "@/lib/notify";
 import type { AuditLog } from "@/types";
 
 export function AuditLogPage() {
   const { t } = useTranslation();
   const [logs, setLogs] = useState<AuditLog[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string>("");
 
   useEffect(() => {
     api
       .listAuditLogs()
       .then((d) => setLogs(d))
-      .catch((e: Error) => setError(e.message))
+      .catch((e: unknown) => {
+        const { code, message } = formatError(e);
+        notify.error(t("notify.errorWithCode", { code, message }));
+      })
       .finally(() => setLoading(false));
-  }, []);
+  }, [t]);
 
   return (
     <div className="space-y-4">
@@ -29,15 +33,12 @@ export function AuditLogPage() {
         <p className="text-sm text-slate-500 mt-1">{t("audit.subtitle")}</p>
       </div>
 
+      {loading ? (
+        <TableSkeleton rows={8} columns={6} />
+      ) : (
       <div className="card overflow-hidden">
-        {loading ? (
-          <Spinner />
-        ) : error ? (
-          <div className="p-6 text-rose-700 bg-rose-50">
-            {t("audit.loadError", { message: error })}
-          </div>
-        ) : logs.length === 0 ? (
-          <EmptyState title={t("audit.empty")} icon="📜" />
+        {logs.length === 0 ? (
+          <EmptyState title={t("audit.empty")} icon={FileSearch} />
         ) : (
           <table className="w-full text-sm">
             <thead className="bg-slate-50 text-xs uppercase tracking-wide text-slate-600">
@@ -69,6 +70,7 @@ export function AuditLogPage() {
           </table>
         )}
       </div>
+      )}
     </div>
   );
 }

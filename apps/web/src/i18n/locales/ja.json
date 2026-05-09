@@ -11,17 +11,24 @@
     "ok": "OK",
     "actions": "操作",
     "total": "合計",
-    "viewArrow": "詳細 →",
-    "viewAllArrow": "すべて表示 →",
+    "viewArrow": "詳細",
+    "viewAllArrow": "すべて表示",
     "search": "検索",
-    "errorPrefix": "エラー"
+    "errorPrefix": "エラー",
+    "featureStub": "今後のリリースで提供予定です。",
+    "retry": "再試行"
   },
   "language": {
     "label": "言語",
     "switcherTitle": "言語を切り替える",
     "zh-TW": "繁體中文",
     "en": "English",
-    "ja": "日本語"
+    "ja": "日本語",
+    "shortLabel": {
+      "zh-TW": "繁中",
+      "en": "EN",
+      "ja": "日本語"
+    }
   },
   "app": {
     "title": "Business Central 統合スイート",
@@ -41,7 +48,35 @@
   "topbar": {
     "apiHealthy": "API 正常",
     "apiDown": "API ダウン",
-    "bcModeLabel": "BC"
+    "bcModeLabel": "BC",
+    "userMenu": {
+      "profile": "プロフィール",
+      "switchOrg": "組織を切り替える",
+      "preferences": "環境設定",
+      "signOut": "サインアウト"
+    },
+    "notifications": {
+      "title": "通知センター",
+      "empty": "新しい通知はありません"
+    },
+    "orgSwitcher": {
+      "title": "組織を切り替える",
+      "switchedTo": "{{name}} に切り替えました"
+    },
+    "commandShortcut": "コマンドパレット"
+  },
+  "commandPalette": {
+    "title": "コマンドパレット",
+    "placeholder": "ページまたはアクションを入力…",
+    "empty": "一致する結果が見つかりません",
+    "viewPendingApproval": "承認待ちの依頼を表示",
+    "groups": {
+      "pages": "ページ",
+      "actions": "アクション"
+    }
+  },
+  "dialog": {
+    "typeToConfirm": "「{{value}}」と入力して確認してください"
   },
   "status": {
     "all": "すべて",
@@ -57,13 +92,13 @@
     "Failed": "失敗"
   },
   "highRisk": {
-    "badge": "⚠ 高リスク",
+    "badge": "高リスク",
     "tag": "高リスク"
   },
   "dashboard": {
     "title": "概要",
     "subtitle": "購買・承認パイプラインの一覧。",
-    "newRequest": "➕ 新規依頼",
+    "newRequest": "新規依頼",
     "totalRequests": "依頼総数",
     "highRiskApprovals": "高リスク承認",
     "openAmount": "未確定金額",
@@ -72,13 +107,13 @@
     "syncHealth": "同期状態",
     "recentFailures": "直近 7 日の失敗",
     "syncedDocuments": "同期済ドキュメント",
-    "viewAuditLogs": "監査ログを見る →",
+    "viewAuditLogs": "監査ログを見る",
     "loadFailed": "ダッシュボードの読み込みに失敗しました：{{message}}"
   },
   "requestList": {
     "title": "購買依頼",
     "summary": "依頼 {{count}} 件 · 合計 {{amount}}",
-    "newRequest": "➕ 新規依頼",
+    "newRequest": "新規依頼",
     "searchLabel": "検索",
     "searchPlaceholder": "説明 / 仕入先 / 依頼者",
     "statusLabel": "ステータス",
@@ -92,11 +127,11 @@
       "created": "作成日時",
       "actions": "操作"
     },
-    "rowAction": "詳細 →",
+    "rowAction": "詳細",
     "empty": {
       "title": "依頼はまだありません",
       "description": "最初の購買依頼を作成して承認フローを開始してください。",
-      "cta": "➕ 依頼を作成"
+      "cta": "依頼を作成"
     },
     "loadError": "読み込みに失敗しました：{{message}}"
   },
@@ -114,10 +149,11 @@
     },
     "placeholders": {
       "description": "例：第2四半期 オフィスノート PC",
-      "itemNo": "ITEM-XXX"
+      "itemNo": "ITEM-XXX",
+      "vendorSearch": "検索ボタンから仕入先を選択してください"
     },
     "lines": "明細",
-    "addLine": "➕ 明細を追加",
+    "addLine": "明細を追加",
     "lineColumns": {
       "itemNo": "品目番号",
       "description": "説明",
@@ -131,10 +167,11 @@
     "cancel": "キャンセル",
     "saveDraft": "下書きとして保存",
     "saving": "保存中…",
-    "submitError": "作成に失敗しました：{{message}}"
+    "submitError": "作成に失敗しました：{{message}}",
+    "identityHint": "あなた（{{name}}）の権限で送信します"
   },
   "detail": {
-    "back": "← 一覧に戻る",
+    "back": "一覧に戻る",
     "total": "合計",
     "fields": {
       "requester": "依頼者",
@@ -159,14 +196,20 @@
       "amount": "金額"
     },
     "workflowActions": "ワークフロー操作",
-    "actor": "操作者",
+    "identityHint": "{{name}}（{{roles}}）として実行します",
     "comment": "コメント",
-    "submit": "📨 提出",
-    "approve": "✓ 承認",
-    "reject": "✗ 却下",
-    "syncToBC": "🔄 Business Central に同期",
+    "commentPlaceholder": "依頼者または次の承認者宛のメモを入力…",
+    "submit": "提出",
+    "approve": "承認",
+    "reject": "却下",
+    "syncToBC": "Business Central に同期",
     "delete": "削除",
-    "deleteConfirm": "この依頼を削除しますか？",
+    "deleteDialog": {
+      "title": "依頼の削除を確認",
+      "body": "この操作は取り消せません。依頼 {{number}}（{{amount}}、明細 {{lineCount}} 件）を完全に削除します。",
+      "confirmation": "削除を確認するには番号 {{number}} を入力してください",
+      "confirm": "依頼を削除"
+    },
     "transitionsHint": "許可される遷移：下書き → 申請中 →（承認済 | 却下）→ 同期済。",
     "auditTrail": "監査履歴",
     "noAuditEntries": "監査ログはまだありません。",
@@ -178,7 +221,8 @@
       "error": "エラー"
     },
     "actionError": "操作に失敗しました：{{message}}",
-    "loadError": "読み込みに失敗しました：{{message}}"
+    "loadError": "読み込みに失敗しました：{{message}}",
+    "roleRequired": "{{role}} ロールが必要です"
   },
   "audit": {
     "title": "監査ログ",
@@ -193,5 +237,16 @@
     },
     "empty": "監査ログはまだありません",
     "loadError": "読み込みに失敗しました：{{message}}"
+  },
+  "notify": {
+    "created": "依頼 {{number}} を作成しました",
+    "submitted": "依頼 {{number}} を承認に提出しました",
+    "approved": "依頼 {{number}} を承認しました",
+    "rejected": "依頼 {{number}} を却下しました",
+    "synced": "依頼 {{number}} を Business Central に同期しました",
+    "deleted": "依頼 {{number}} を削除しました",
+    "viewAction": "表示",
+    "retryAction": "再試行",
+    "errorWithCode": "[{{code}}] {{message}}"
   }
 }

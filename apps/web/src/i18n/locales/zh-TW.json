@@ -11,17 +11,24 @@
     "ok": "確定",
     "actions": "操作",
     "total": "合計",
-    "viewArrow": "檢視 →",
-    "viewAllArrow": "全部檢視 →",
+    "viewArrow": "檢視",
+    "viewAllArrow": "全部檢視",
     "search": "搜尋",
-    "errorPrefix": "錯誤"
+    "errorPrefix": "錯誤",
+    "featureStub": "此功能於後續版本上線。",
+    "retry": "重試"
   },
   "language": {
     "label": "語言",
     "switcherTitle": "切換語言",
     "zh-TW": "繁體中文",
     "en": "English",
-    "ja": "日本語"
+    "ja": "日本語",
+    "shortLabel": {
+      "zh-TW": "繁中",
+      "en": "EN",
+      "ja": "日本語"
+    }
   },
   "app": {
     "title": "Business Central Integration Suite",
@@ -41,7 +48,35 @@
   "topbar": {
     "apiHealthy": "API 正常",
     "apiDown": "API 異常",
-    "bcModeLabel": "BC 模式"
+    "bcModeLabel": "BC 模式",
+    "userMenu": {
+      "profile": "個人設定",
+      "switchOrg": "切換組織",
+      "preferences": "偏好設定",
+      "signOut": "登出"
+    },
+    "notifications": {
+      "title": "通知中心",
+      "empty": "目前沒有新通知"
+    },
+    "orgSwitcher": {
+      "title": "切換組織",
+      "switchedTo": "已切換到 {{name}}"
+    },
+    "commandShortcut": "命令面板"
+  },
+  "commandPalette": {
+    "title": "命令面板",
+    "placeholder": "輸入頁面或動作名稱…",
+    "empty": "找不到符合的結果",
+    "viewPendingApproval": "查看待簽核請購",
+    "groups": {
+      "pages": "頁面",
+      "actions": "動作"
+    }
+  },
+  "dialog": {
+    "typeToConfirm": "請輸入「{{value}}」以確認"
   },
   "status": {
     "all": "全部",
@@ -57,13 +92,13 @@
     "Failed": "失敗"
   },
   "highRisk": {
-    "badge": "⚠ 高風險",
+    "badge": "高風險",
     "tag": "高風險"
   },
   "dashboard": {
     "title": "總覽",
     "subtitle": "請購／核准流程一覽。",
-    "newRequest": "➕ 新增請購單",
+    "newRequest": "新增請購單",
     "totalRequests": "請購總筆數",
     "highRiskApprovals": "高風險核准",
     "openAmount": "未結金額",
@@ -72,13 +107,13 @@
     "syncHealth": "同步健康度",
     "recentFailures": "近 7 日失敗",
     "syncedDocuments": "已同步單據",
-    "viewAuditLogs": "檢視稽核紀錄 →",
+    "viewAuditLogs": "檢視稽核紀錄",
     "loadFailed": "載入儀表板失敗：{{message}}"
   },
   "requestList": {
     "title": "請購單",
     "summary": "{{count}} 筆請購單 · 合計 {{amount}}",
-    "newRequest": "➕ 新增請購單",
+    "newRequest": "新增請購單",
     "searchLabel": "搜尋",
     "searchPlaceholder": "說明 / 廠商 / 申請人",
     "statusLabel": "狀態",
@@ -92,11 +127,11 @@
       "created": "建立時間",
       "actions": "操作"
     },
-    "rowAction": "詳細 →",
+    "rowAction": "詳細",
     "empty": {
       "title": "目前沒有任何請購單",
       "description": "建立第一筆請購單以啟動核准流程。",
-      "cta": "➕ 建立請購單"
+      "cta": "建立請購單"
     },
     "loadError": "載入失敗：{{message}}"
   },
@@ -114,10 +149,11 @@
     },
     "placeholders": {
       "description": "例：第二季新進員工筆電",
-      "itemNo": "ITEM-XXX"
+      "itemNo": "ITEM-XXX",
+      "vendorSearch": "請使用搜尋選擇廠商"
     },
     "lines": "明細",
-    "addLine": "➕ 新增明細",
+    "addLine": "新增明細",
     "lineColumns": {
       "itemNo": "品號",
       "description": "說明",
@@ -131,10 +167,11 @@
     "cancel": "取消",
     "saveDraft": "儲存為草稿",
     "saving": "儲存中…",
-    "submitError": "建立失敗：{{message}}"
+    "submitError": "建立失敗：{{message}}",
+    "identityHint": "使用您（{{name}}）的身分送出"
   },
   "detail": {
-    "back": "← 返回列表",
+    "back": "返回列表",
     "total": "總金額",
     "fields": {
       "requester": "申請人",
@@ -159,14 +196,20 @@
       "amount": "金額"
     },
     "workflowActions": "流程操作",
-    "actor": "操作人",
+    "identityHint": "您將以 {{name}}（{{roles}}）的身分執行此操作",
     "comment": "備註",
-    "submit": "📨 送審",
-    "approve": "✓ 核准",
-    "reject": "✗ 退回",
-    "syncToBC": "🔄 同步至 Business Central",
+    "commentPlaceholder": "輸入給申請人或下一位簽核者的備註…",
+    "submit": "送審",
+    "approve": "核准",
+    "reject": "退回",
+    "syncToBC": "同步至 Business Central",
     "delete": "刪除",
-    "deleteConfirm": "確定要刪除這筆請購單？",
+    "deleteDialog": {
+      "title": "確認刪除請購單",
+      "body": "此動作無法復原。將刪除單號 {{number}}（{{amount}}、{{lineCount}} 筆明細）。",
+      "confirmation": "請輸入單號 {{number}} 以確認刪除",
+      "confirm": "確認刪除"
+    },
     "transitionsHint": "允許的狀態流：草稿 → 已送審 →（已核准 | 已退回）→ 已同步。",
     "auditTrail": "稽核軌跡",
     "noAuditEntries": "尚無稽核紀錄。",
@@ -178,7 +221,8 @@
       "error": "錯誤"
     },
     "actionError": "操作失敗：{{message}}",
-    "loadError": "載入失敗：{{message}}"
+    "loadError": "載入失敗：{{message}}",
+    "roleRequired": "需要 {{role}} 角色"
   },
   "audit": {
     "title": "稽核紀錄",
@@ -193,5 +237,16 @@
     },
     "empty": "目前沒有任何稽核紀錄",
     "loadError": "載入失敗：{{message}}"
+  },
+  "notify": {
+    "created": "請購單 {{number}} 已建立",
+    "submitted": "請購單 {{number}} 已送出簽核",
+    "approved": "請購單 {{number}} 已核准",
+    "rejected": "請購單 {{number}} 已退回",
+    "synced": "請購單 {{number}} 已同步至 Business Central",
+    "deleted": "請購單 {{number}} 已刪除",
+    "viewAction": "查看",
+    "retryAction": "重試",
+    "errorWithCode": "[{{code}}] {{message}}"
   }
 }

@@ -25,7 +25,7 @@
 
 ## 二、系統設計目標
 
-這個專案在「採購流程 + Business Central 整合」這個業務情境下，刻意覆蓋下列技術面向，作為可獨立運行的參考實作：
+這個專案在「採購流程 + Business Central 整合」這個業務情境下，覆蓋下列技術面向，作為可獨立運行的參考實作：
 
 | 面向 | 此專案的對應實作 |
 |------|----------------|
@@ -45,7 +45,7 @@
 ```
 ┌──────────────────────────────────────────────────────────────────┐
 │                  React + Tailwind Dashboard (5173)               │
-│   Pages: Dashboard / Requests / Detail / Create / Audit Logs    │
+│   Pages: Dashboard / Requests / Detail / Create / Audit Logs     │
 └────────────────────────┬─────────────────────────────────────────┘
                          │ JSON over HTTP
                          ▼
@@ -53,7 +53,7 @@
 │            FastAPI + SQLAlchemy + Pydantic v2 (8000)             │
 │   Routers: purchase_requests / audit_logs / dashboard            │
 │   Audit  : every state change → AuditLog table                   │
-└──────┬─────────────────────────────────────────┬─────────────────┘
+└──────┬──────────────────────────────────────────┬────────────────┘
        │                                          │
        ▼                                          ▼
 ┌──────────────────┐                ┌──────────────────────────────┐
