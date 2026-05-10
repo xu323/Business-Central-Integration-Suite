@@ -1,0 +1,43 @@
+/* Print styles for purchase request detail pages. */
+@media print {
+  /* Hide chrome / nav / actions on print. */
+  aside,
+  header,
+  .no-print,
+  [data-no-print="true"] {
+    display: none !important;
+  }
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  main {
+    overflow: visible !important;
+  }
+  .card {
+    border: 1px solid #C8C6C4 !important;
+    box-shadow: none !important;
+    break-inside: avoid;
+  }
+  table {
+    page-break-inside: auto;
+  }
+  tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+  /* Drop interactive widgets. */
+  button,
+  .btn,
+  [role="button"] {
+    display: none !important;
+  }
+  a {
+    color: black !important;
+    text-decoration: none !important;
+  }
+  /* Force light, A4-friendly typography. */
+  html {
+    font-size: 11pt !important;
+  }
+}

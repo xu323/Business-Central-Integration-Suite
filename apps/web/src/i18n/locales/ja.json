@@ -224,6 +224,114 @@
     "loadError": "読み込みに失敗しました：{{message}}",
     "roleRequired": "{{role}} ロールが必要です"
   },
+  "notify": {
+    "created": "依頼 {{number}} を作成しました",
+    "submitted": "依頼 {{number}} を承認に提出しました",
+    "approved": "依頼 {{number}} を承認しました",
+    "rejected": "依頼 {{number}} を却下しました",
+    "synced": "依頼 {{number}} を Business Central に同期しました",
+    "deleted": "依頼 {{number}} を削除しました",
+    "draftAutoSaved": "下書きを {{time}} に自動保存しました",
+    "viewAction": "表示",
+    "retryAction": "再試行",
+    "errorWithCode": "[{{code}}] {{message}}"
+  },
+  "table": {
+    "filters": "フィルタ",
+    "filtersReset": "リセット",
+    "filtersApply": "適用",
+    "columns": "列",
+    "columnsTitle": "表示する列",
+    "export": "エクスポート",
+    "exportAs": {
+      "csv": "CSV (.csv)",
+      "xlsx": "Excel (.xlsx)",
+      "pdf": "PDF (.pdf)"
+    },
+    "print": "印刷",
+    "refresh": "更新",
+    "density": {
+      "label": "行の高さ",
+      "compact": "コンパクト",
+      "standard": "標準",
+      "comfortable": "ゆったり"
+    }
+  },
+  "filters": {
+    "amountRange": "金額範囲",
+    "amountMin": "最小",
+    "amountMax": "最大",
+    "dateRange": "作成日",
+    "dateFrom": "から",
+    "dateTo": "まで",
+    "department": "部署",
+    "vendor": "仕入先",
+    "highRiskOnly": "高リスクのみ"
+  },
+  "bulk": {
+    "approve": "一括承認",
+    "reject": "一括却下",
+    "exportSelected": "選択をエクスポート"
+  },
+  "lookup": {
+    "vendor": {
+      "title": "仕入先を選択",
+      "description": "仕入先マスタから選びます。",
+      "placeholder": "番号 / 名前 / 担当者で検索…",
+      "footer": "一致 {{count}} 件",
+      "stub": "（フロント側のサンプルデータ。本番は /api/vendors/search に接続）",
+      "cols": {
+        "no": "番号",
+        "name": "名前",
+        "contact": "担当者",
+        "country": "国",
+        "lastTxn": "直近取引"
+      }
+    },
+    "item": {
+      "title": "品目を選択",
+      "description": "品目マスタから選びます。",
+      "placeholder": "番号 / 名前 / カテゴリで検索…",
+      "footer": "一致 {{count}} 件",
+      "cols": {
+        "no": "番号",
+        "name": "名前",
+        "category": "カテゴリ",
+        "uom": "単位",
+        "unitPrice": "単価"
+      }
+    }
+  },
+  "create_v2": {
+    "submitForApproval": "承認に提出",
+    "savedAt": "{{time}} に自動保存",
+    "validation": {
+      "descriptionMin": "説明は 5 文字以上にしてください。",
+      "vendorRequired": "仕入先は必須です。",
+      "linesRequired": "明細を 1 行以上追加してください。",
+      "lineQuantity": "数量は 0 より大きい必要があります。",
+      "lineUnitPrice": "単価は 0 より大きい必要があります。",
+      "requiredDatePast": "必要日は今日以降を指定してください。"
+    },
+    "internalNote": "内部メモ",
+    "externalNote": "外部メモ",
+    "internalNotePlaceholder": "社内承認者にのみ表示されます。",
+    "externalNotePlaceholder": "発注書とともに仕入先に送信されます。"
+  },
+  "detail_v2": {
+    "copyAsNew": "コピーして新規作成",
+    "downloadPdf": "PDF をダウンロード",
+    "approvalTimeline": "承認タイムライン"
+  },
+  "dashboard_v2": {
+    "trend30d": "直近 30 日のトレンド",
+    "trendCount": "件数",
+    "trendAmount": "金額",
+    "deptRanking": "部署別 Top 5（金額）",
+    "highRiskList": "高リスク案件",
+    "vsLastMonth": "前月比 {{value}}",
+    "noData": "データなし"
+  },
   "audit": {
     "title": "監査ログ",
     "subtitle": "すべてのワークフローイベントと BC 同期の試行を記録します。",
@@ -235,18 +343,26 @@
       "sync": "同期",
       "error": "エラー"
     },
+    "filters": {
+      "actor": "操作者",
+      "action": "動作"
+    },
+    "action": {
+      "create": "作成",
+      "submit": "提出",
+      "approve": "承認",
+      "reject": "却下",
+      "sync": "同期",
+      "delete": "削除",
+      "seed": "初期データ"
+    },
     "empty": "監査ログはまだありません",
     "loadError": "読み込みに失敗しました：{{message}}"
   },
-  "notify": {
-    "created": "依頼 {{number}} を作成しました",
-    "submitted": "依頼 {{number}} を承認に提出しました",
-    "approved": "依頼 {{number}} を承認しました",
-    "rejected": "依頼 {{number}} を却下しました",
-    "synced": "依頼 {{number}} を Business Central に同期しました",
-    "deleted": "依頼 {{number}} を削除しました",
-    "viewAction": "表示",
-    "retryAction": "再試行",
-    "errorWithCode": "[{{code}}] {{message}}"
+  "breadcrumb": {
+    "dashboard": "ダッシュボード",
+    "requests": "購買依頼",
+    "createRequest": "新規",
+    "auditLogs": "監査ログ"
   }
 }

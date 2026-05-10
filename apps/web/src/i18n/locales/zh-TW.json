@@ -224,6 +224,114 @@
     "loadError": "載入失敗：{{message}}",
     "roleRequired": "需要 {{role}} 角色"
   },
+  "notify": {
+    "created": "請購單 {{number}} 已建立",
+    "submitted": "請購單 {{number}} 已送出簽核",
+    "approved": "請購單 {{number}} 已核准",
+    "rejected": "請購單 {{number}} 已退回",
+    "synced": "請購單 {{number}} 已同步至 Business Central",
+    "deleted": "請購單 {{number}} 已刪除",
+    "draftAutoSaved": "草稿已自動儲存於 {{time}}",
+    "viewAction": "查看",
+    "retryAction": "重試",
+    "errorWithCode": "[{{code}}] {{message}}"
+  },
+  "table": {
+    "filters": "篩選",
+    "filtersReset": "重設篩選",
+    "filtersApply": "套用",
+    "columns": "欄位",
+    "columnsTitle": "顯示欄位",
+    "export": "匯出",
+    "exportAs": {
+      "csv": "CSV (.csv)",
+      "xlsx": "Excel (.xlsx)",
+      "pdf": "PDF (.pdf)"
+    },
+    "print": "列印",
+    "refresh": "重新整理",
+    "density": {
+      "label": "表格密度",
+      "compact": "緊湊",
+      "standard": "標準",
+      "comfortable": "舒適"
+    }
+  },
+  "filters": {
+    "amountRange": "金額區間",
+    "amountMin": "最低",
+    "amountMax": "最高",
+    "dateRange": "建立日期",
+    "dateFrom": "起",
+    "dateTo": "迄",
+    "department": "部門",
+    "vendor": "廠商",
+    "highRiskOnly": "僅顯示高風險"
+  },
+  "bulk": {
+    "approve": "批次核准",
+    "reject": "批次退回",
+    "exportSelected": "匯出所選"
+  },
+  "lookup": {
+    "vendor": {
+      "title": "選擇廠商",
+      "description": "從廠商主檔中選一筆。",
+      "placeholder": "輸入廠商編號 / 名稱 / 聯絡人…",
+      "footer": "{{count}} 筆符合",
+      "stub": "（前端示範資料；正式上線後改接 /api/vendors/search）",
+      "cols": {
+        "no": "廠商編號",
+        "name": "廠商名稱",
+        "contact": "聯絡人",
+        "country": "國家",
+        "lastTxn": "最近交易"
+      }
+    },
+    "item": {
+      "title": "選擇品項",
+      "description": "從品項主檔中選一筆。",
+      "placeholder": "輸入品號 / 名稱 / 類別…",
+      "footer": "{{count}} 筆符合",
+      "cols": {
+        "no": "品號",
+        "name": "名稱",
+        "category": "類別",
+        "uom": "單位",
+        "unitPrice": "單價"
+      }
+    }
+  },
+  "create_v2": {
+    "submitForApproval": "送出簽核",
+    "savedAt": "已自動儲存於 {{time}}",
+    "validation": {
+      "descriptionMin": "說明至少需 5 個字。",
+      "vendorRequired": "請選擇廠商。",
+      "linesRequired": "請至少新增 1 筆明細。",
+      "lineQuantity": "數量必須大於 0。",
+      "lineUnitPrice": "單價必須大於 0。",
+      "requiredDatePast": "需求日期不能早於今天。"
+    },
+    "internalNote": "內部備註",
+    "externalNote": "對外備註",
+    "internalNotePlaceholder": "僅內部簽核者看得到的備註。",
+    "externalNotePlaceholder": "會隨採購單傳送給廠商的備註。"
+  },
+  "detail_v2": {
+    "copyAsNew": "複製為新單",
+    "downloadPdf": "下載 PDF",
+    "approvalTimeline": "簽核時間軸"
+  },
+  "dashboard_v2": {
+    "trend30d": "近 30 天請購趨勢",
+    "trendCount": "件數",
+    "trendAmount": "金額",
+    "deptRanking": "部門 Top 5（金額）",
+    "highRiskList": "高風險案件",
+    "vsLastMonth": "較上月 {{value}}",
+    "noData": "暫無資料"
+  },
   "audit": {
     "title": "稽核紀錄",
     "subtitle": "所有流程事件與 BC 同步嘗試都會記錄在此。",
@@ -235,18 +343,26 @@
       "sync": "同步",
       "error": "錯誤"
     },
+    "filters": {
+      "actor": "操作人",
+      "action": "動作"
+    },
+    "action": {
+      "create": "建立",
+      "submit": "送審",
+      "approve": "核准",
+      "reject": "退回",
+      "sync": "同步",
+      "delete": "刪除",
+      "seed": "初始資料"
+    },
     "empty": "目前沒有任何稽核紀錄",
     "loadError": "載入失敗：{{message}}"
   },
-  "notify": {
-    "created": "請購單 {{number}} 已建立",
-    "submitted": "請購單 {{number}} 已送出簽核",
-    "approved": "請購單 {{number}} 已核准",
-    "rejected": "請購單 {{number}} 已退回",
-    "synced": "請購單 {{number}} 已同步至 Business Central",
-    "deleted": "請購單 {{number}} 已刪除",
-    "viewAction": "查看",
-    "retryAction": "重試",
-    "errorWithCode": "[{{code}}] {{message}}"
+  "breadcrumb": {
+    "dashboard": "儀表板",
+    "requests": "請購單",
+    "createRequest": "新增",
+    "auditLogs": "稽核紀錄"
   }
 }

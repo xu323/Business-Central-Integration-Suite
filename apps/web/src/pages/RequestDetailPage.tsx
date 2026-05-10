@@ -1,7 +1,9 @@
 import * as Tooltip from "@radix-ui/react-tooltip";
 import {
-  ArrowLeft,
   Check,
+  Copy,
+  Download,
+  Printer,
   RefreshCw,
   SendHorizontal,
   Trash2,
@@ -12,19 +14,22 @@ import { useTranslation } from "react-i18next";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 import { hasRole, useCurrentUser, type UserRole } from "@/auth/useCurrentUser";
+import { ApprovalTimeline } from "@/components/ApprovalTimeline";
 import { Avatar } from "@/components/Avatar";
+import { Breadcrumb } from "@/components/Breadcrumb";
 import { InlineSpinner } from "@/components/Spinner";
 import {
   HighRiskBadge,
   StatusBadge,
-  SyncStatusBadge,
 } from "@/components/StatusBadge";
 import { AlertDialog } from "@/components/ui/AlertDialog";
 import { DetailSkeleton } from "@/components/ui/Skeleton";
 import { api } from "@/lib/api";
 import { cn } from "@/lib/cn";
+import { exportPdf } from "@/lib/export";
 import { formatCurrency, formatDate } from "@/lib/format";
 import { formatError, notify } from "@/lib/notify";
+import { pushRecent } from "@/lib/recent";
 import type { AuditLog, PurchaseRequest } from "@/types";
 
 type WorkflowOp = "submit" | "approve" | "reject" | "sync";
@@ -52,6 +57,7 @@ export function RequestDetailPage() {
       ]);
       setRequest(r);
       setLogs(l);
+      pushRecent({ id: r.id, number: r.number, description: r.description });
     } catch (e) {
       const { code, message } = formatError(e);
       notify.error(t("notify.errorWithCode", { code, message }));
@@ -114,6 +120,33 @@ export function RequestDetailPage() {
     }
   };
 
+  const onCopyAsNew = () => {
+    if (!request) return;
+    navigate(`/requests/new?clone=${request.id}`);
+  };
+
+  const onDownloadPdf = () => {
+    if (!request) return;
+    exportPdf(
+      request.lines,
+      [
+        { header: t("detail.lineColumns.item"), accessor: (l) => l.item_no },
+        { header: t("detail.lineColumns.description"), accessor: (l) => l.description },
+        { header: t("detail.lineColumns.qty"), accessor: (l) => l.quantity },
+        { header: t("detail.lineColumns.unitPrice"), accessor: (l) => l.unit_price.toLocaleString() },
+        { header: t("detail.lineColumns.amount"), accessor: (l) => l.line_amount.toLocaleString() },
+      ],
+      `purchase-request-${request.number}`,
+      {
+        title: `${t("requestList.title")} · ${request.number}`,
+        subtitle: `${request.vendor_name || request.vendor_no} · ${formatCurrency(
+          request.total_amount,
+          request.currency_code,
+        )} · ${t(`status.${request.status}`)}`,
+      },
+    );
+  };
+
   if (loading) return <DetailSkeleton />;
   if (!request) return null;
 
@@ -127,16 +160,18 @@ export function RequestDetailPage() {
 
   return (
     <div className="space-y-4">
+      <Breadcrumb
+        items={[
+          { label: t("breadcrumb.dashboard"), to: "/" },
+          { label: t("breadcrumb.requests"), to: "/requests" },
+          { label: request.number },
+        ]}
+      />
+
+      {/* Header */}
       <div className="flex items-center justify-between gap-3 flex-wrap">
         <div>
-          <Link
-            to="/requests"
-            className="inline-flex items-center gap-1 text-xs text-brand-600 hover:underline"
-          >
-            <ArrowLeft size={12} strokeWidth={1.75} />
-            {t("detail.back")}
-          </Link>
-          <h2 className="text-xl font-semibold text-neutral-190 mt-1 flex items-center gap-3 flex-wrap">
+          <h2 className="text-xl font-semibold text-neutral-190 flex items-center gap-3 flex-wrap">
             {request.number}
             <StatusBadge status={request.status} />
             {request.high_risk && <HighRiskBadge value />}
@@ -145,14 +180,34 @@ export function RequestDetailPage() {
         </div>
         <div className="text-right">
           <div className="text-xs text-neutral-130">{t("detail.total")}</div>
-          <div className="text-2xl font-semibold text-neutral-190">
+          <div className="text-2xl font-semibold text-neutral-190 tabular-nums">
             {formatCurrency(request.total_amount, request.currency_code)}
           </div>
         </div>
       </div>
 
+      {/* Command bar */}
+      <div className="flex items-center gap-2 flex-wrap" data-no-print="true">
+        <Link to="/requests" className="btn-subtle">
+          ← {t("detail.back")}
+        </Link>
+        <span className="w-px h-5 bg-neutral-30 mx-1" />
+        <button type="button" className="btn-secondary" onClick={onCopyAsNew}>
+          <Copy size={14} strokeWidth={1.75} />
+          {t("detail_v2.copyAsNew")}
+        </button>
+        <button type="button" className="btn-secondary" onClick={onDownloadPdf}>
+          <Download size={14} strokeWidth={1.75} />
+          {t("detail_v2.downloadPdf")}
+        </button>
+        <button type="button" className="btn-secondary" onClick={() => window.print()}>
+          <Printer size={14} strokeWidth={1.75} />
+          {t("table.print")}
+        </button>
+      </div>
+
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        <div className="card p-5 lg:col-span-2 space-y-4">
+        <div className="card p-4 lg:col-span-2 space-y-4">
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 text-sm">
             <Field label={t("detail.fields.requester")} value={request.requester} />
             <Field label={t("detail.fields.department")} value={request.department} />
@@ -172,10 +227,10 @@ export function RequestDetailPage() {
           </div>
 
           <div>
-            <h3 className="text-sm font-semibold text-neutral-160 mb-2">{t("detail.lines")}</h3>
+            <h3 className="text-sm font-semibold text-neutral-190 mb-2">{t("detail.lines")}</h3>
             <table className="w-full text-sm">
-              <thead className="text-xs font-semibold text-neutral-130">
-                <tr className="border-b border-neutral-20">
+              <thead className="text-xs font-semibold text-neutral-130 border-b border-neutral-30">
+                <tr>
                   <th className="text-left py-2">{t("detail.lineColumns.item")}</th>
                   <th className="text-left py-2">{t("detail.lineColumns.description")}</th>
                   <th className="text-right py-2">{t("detail.lineColumns.qty")}</th>
@@ -185,12 +240,12 @@ export function RequestDetailPage() {
               </thead>
               <tbody className="divide-y divide-neutral-20">
                 {request.lines.map((line) => (
-                  <tr key={line.id}>
+                  <tr key={line.id} className="row-standard">
                     <td className="py-2 font-mono text-xs">{line.item_no}</td>
                     <td className="py-2">{line.description}</td>
-                    <td className="py-2 text-right">{line.quantity}</td>
-                    <td className="py-2 text-right">{line.unit_price.toLocaleString()}</td>
-                    <td className="py-2 text-right font-medium">
+                    <td className="py-2 text-right tabular-nums">{line.quantity}</td>
+                    <td className="py-2 text-right tabular-nums">{line.unit_price.toLocaleString()}</td>
+                    <td className="py-2 text-right font-medium tabular-nums">
                       {line.line_amount.toLocaleString()}
                     </td>
                   </tr>
@@ -201,8 +256,8 @@ export function RequestDetailPage() {
         </div>
 
         <Tooltip.Provider delayDuration={200}>
-          <div className="card p-5 space-y-4">
-            <h3 className="text-sm font-semibold text-neutral-160">{t("detail.workflowActions")}</h3>
+          <div className="card p-4 space-y-4" data-no-print="true">
+            <h3 className="text-sm font-semibold text-neutral-190">{t("detail.workflowActions")}</h3>
 
             {user && (
               <div className="rounded border border-brand-100 bg-brand-50 px-3 py-2 flex items-center gap-2">
@@ -267,7 +322,11 @@ export function RequestDetailPage() {
                 onClick={() => action("sync")}
                 busy={busy === "sync"}
               >
-                <RefreshCw size={14} strokeWidth={1.75} className={cn(busy === "sync" && "animate-spin")} />
+                <RefreshCw
+                  size={14}
+                  strokeWidth={1.75}
+                  className={cn(busy === "sync" && "animate-spin")}
+                />
                 {t("detail.syncToBC")}
               </ActionButton>
               {canDelete && (
@@ -288,36 +347,11 @@ export function RequestDetailPage() {
         </Tooltip.Provider>
       </div>
 
-      <div className="card p-5">
-        <h3 className="text-sm font-semibold text-neutral-160 mb-3">{t("detail.auditTrail")}</h3>
-        {logs.length === 0 ? (
-          <div className="text-sm text-neutral-130">{t("detail.noAuditEntries")}</div>
-        ) : (
-          <table className="w-full text-sm">
-            <thead className="text-xs font-semibold text-neutral-130">
-              <tr className="border-b border-neutral-20">
-                <th className="text-left py-2">{t("detail.auditColumns.time")}</th>
-                <th className="text-left py-2">{t("detail.auditColumns.actor")}</th>
-                <th className="text-left py-2">{t("detail.auditColumns.action")}</th>
-                <th className="text-left py-2">{t("detail.auditColumns.sync")}</th>
-                <th className="text-left py-2">{t("detail.auditColumns.error")}</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-neutral-20">
-              {logs.map((log) => (
-                <tr key={log.id}>
-                  <td className="py-2 text-xs text-neutral-130">{formatDate(log.timestamp)}</td>
-                  <td className="py-2">{log.actor}</td>
-                  <td className="py-2 font-mono text-xs">{log.action}</td>
-                  <td className="py-2">
-                    <SyncStatusBadge status={log.sync_status} />
-                  </td>
-                  <td className="py-2 text-xs text-danger">{log.error_message || "—"}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
+      <div className="card p-4">
+        <h3 className="text-sm font-semibold text-neutral-190 mb-3">
+          {t("detail_v2.approvalTimeline")}
+        </h3>
+        <ApprovalTimeline logs={logs} />
       </div>
 
       <AlertDialog
@@ -374,7 +408,9 @@ function ActionButton({
   return (
     <Tooltip.Root>
       <Tooltip.Trigger asChild>
-        <span tabIndex={0} className="contents">{button}</span>
+        <span tabIndex={0} className="contents">
+          {button}
+        </span>
       </Tooltip.Trigger>
       <Tooltip.Portal>
         <Tooltip.Content

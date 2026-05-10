@@ -224,6 +224,114 @@
     "loadError": "Failed to load: {{message}}",
     "roleRequired": "{{role}} role required"
   },
+  "notify": {
+    "created": "Request {{number}} created",
+    "submitted": "Request {{number}} submitted for approval",
+    "approved": "Request {{number}} approved",
+    "rejected": "Request {{number}} rejected",
+    "synced": "Request {{number}} synced to Business Central",
+    "deleted": "Request {{number}} deleted",
+    "draftAutoSaved": "Draft auto-saved at {{time}}",
+    "viewAction": "View",
+    "retryAction": "Retry",
+    "errorWithCode": "[{{code}}] {{message}}"
+  },
+  "table": {
+    "filters": "Filters",
+    "filtersReset": "Reset",
+    "filtersApply": "Apply",
+    "columns": "Columns",
+    "columnsTitle": "Visible columns",
+    "export": "Export",
+    "exportAs": {
+      "csv": "CSV (.csv)",
+      "xlsx": "Excel (.xlsx)",
+      "pdf": "PDF (.pdf)"
+    },
+    "print": "Print",
+    "refresh": "Refresh",
+    "density": {
+      "label": "Row density",
+      "compact": "Compact",
+      "standard": "Standard",
+      "comfortable": "Comfortable"
+    }
+  },
+  "filters": {
+    "amountRange": "Amount range",
+    "amountMin": "Min",
+    "amountMax": "Max",
+    "dateRange": "Created",
+    "dateFrom": "From",
+    "dateTo": "To",
+    "department": "Department",
+    "vendor": "Vendor",
+    "highRiskOnly": "High-risk only"
+  },
+  "bulk": {
+    "approve": "Bulk approve",
+    "reject": "Bulk reject",
+    "exportSelected": "Export selected"
+  },
+  "lookup": {
+    "vendor": {
+      "title": "Choose vendor",
+      "description": "Pick a vendor from the master record.",
+      "placeholder": "Search by number, name, or contact…",
+      "footer": "{{count}} matches",
+      "stub": "(front-end stub; replace with /api/vendors/search before production)",
+      "cols": {
+        "no": "Number",
+        "name": "Name",
+        "contact": "Contact",
+        "country": "Country",
+        "lastTxn": "Last txn"
+      }
+    },
+    "item": {
+      "title": "Choose item",
+      "description": "Pick an item from the master record.",
+      "placeholder": "Search by number, name, or category…",
+      "footer": "{{count}} matches",
+      "cols": {
+        "no": "Number",
+        "name": "Name",
+        "category": "Category",
+        "uom": "UoM",
+        "unitPrice": "Unit price"
+      }
+    }
+  },
+  "create_v2": {
+    "submitForApproval": "Submit for approval",
+    "savedAt": "Auto-saved at {{time}}",
+    "validation": {
+      "descriptionMin": "Description must be at least 5 characters.",
+      "vendorRequired": "Vendor is required.",
+      "linesRequired": "Add at least one line.",
+      "lineQuantity": "Quantity must be greater than 0.",
+      "lineUnitPrice": "Unit price must be greater than 0.",
+      "requiredDatePast": "Required date cannot be in the past."
+    },
+    "internalNote": "Internal note",
+    "externalNote": "External note",
+    "internalNotePlaceholder": "Visible only to internal approvers.",
+    "externalNotePlaceholder": "Sent to the vendor on the purchase order."
+  },
+  "detail_v2": {
+    "copyAsNew": "Copy as new",
+    "downloadPdf": "Download PDF",
+    "approvalTimeline": "Approval timeline"
+  },
+  "dashboard_v2": {
+    "trend30d": "Last 30 days · requests",
+    "trendCount": "Count",
+    "trendAmount": "Amount",
+    "deptRanking": "Top 5 departments by amount",
+    "highRiskList": "High-risk items",
+    "vsLastMonth": "{{value}} vs last month",
+    "noData": "No data"
+  },
   "audit": {
     "title": "Audit Logs",
     "subtitle": "Every workflow event and BC sync attempt is captured here.",
@@ -235,18 +343,26 @@
       "sync": "Sync",
       "error": "Error"
     },
+    "filters": {
+      "actor": "Actor",
+      "action": "Action"
+    },
+    "action": {
+      "create": "Create",
+      "submit": "Submit",
+      "approve": "Approve",
+      "reject": "Reject",
+      "sync": "Sync",
+      "delete": "Delete",
+      "seed": "Seed"
+    },
     "empty": "No audit logs yet",
     "loadError": "Failed to load: {{message}}"
   },
-  "notify": {
-    "created": "Request {{number}} created",
-    "submitted": "Request {{number}} submitted for approval",
-    "approved": "Request {{number}} approved",
-    "rejected": "Request {{number}} rejected",
-    "synced": "Request {{number}} synced to Business Central",
-    "deleted": "Request {{number}} deleted",
-    "viewAction": "View",
-    "retryAction": "Retry",
-    "errorWithCode": "[{{code}}] {{message}}"
+  "breadcrumb": {
+    "dashboard": "Dashboard",
+    "requests": "Requests",
+    "createRequest": "New",
+    "auditLogs": "Audit"
   }
 }
