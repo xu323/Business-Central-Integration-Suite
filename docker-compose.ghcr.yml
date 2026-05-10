@@ -51,8 +51,10 @@ services:
       POSTGRES_USER: bcsuite
       POSTGRES_PASSWORD: bcsuite
       POSTGRES_DB: bcsuite
+    # Host port 5465 → container 5432 (avoid conflicts with a host Postgres
+    # or another docker stack that already binds 5432).
     ports:
-      - "5432:5432"
+      - "5465:5432"
     volumes:
       - bcsuite-db-data:/var/lib/postgresql/data
     healthcheck:

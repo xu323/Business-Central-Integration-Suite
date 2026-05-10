@@ -59,8 +59,11 @@ services:
       POSTGRES_USER: bcsuite
       POSTGRES_PASSWORD: bcsuite
       POSTGRES_DB: bcsuite
+    # Host port 5465 → container 5432, so a coexisting Postgres on the host
+    # (or another docker stack) still owns 5432. The api container connects
+    # via the internal docker network as db:5432, unaffected by this mapping.
     ports:
-      - "5432:5432"
+      - "5465:5432"
     volumes:
       - bcsuite-db-data:/var/lib/postgresql/data
     healthcheck:
