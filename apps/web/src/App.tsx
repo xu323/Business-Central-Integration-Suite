@@ -1,11 +1,12 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 import { Layout } from "@/components/Layout";
-import { DashboardPage } from "@/pages/DashboardPage";
-import { RequestListPage } from "@/pages/RequestListPage";
-import { CreateRequestPage } from "@/pages/CreateRequestPage";
-import { RequestDetailPage } from "@/pages/RequestDetailPage";
 import { AuditLogPage } from "@/pages/AuditLogPage";
+import { CreateRequestPage } from "@/pages/CreateRequestPage";
+import { DashboardPage } from "@/pages/DashboardPage";
+import { NotFoundPage } from "@/pages/NotFoundPage";
+import { RequestDetailPage } from "@/pages/RequestDetailPage";
+import { RequestListPage } from "@/pages/RequestListPage";
 
 export default function App() {
   return (
@@ -16,7 +17,7 @@ export default function App() {
         <Route path="/requests/new" element={<CreateRequestPage />} />
         <Route path="/requests/:id" element={<RequestDetailPage />} />
         <Route path="/audit" element={<AuditLogPage />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Layout>
   );

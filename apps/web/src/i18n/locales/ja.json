@@ -364,5 +364,10 @@
     "requests": "購買依頼",
     "createRequest": "新規",
     "auditLogs": "監査ログ"
+  },
+  "notFound": {
+    "body": "お探しのページは見つかりません。移動または存在しない可能性があります。",
+    "path": "パス：{{path}}",
+    "backHome": "ダッシュボードへ戻る"
   }
 }

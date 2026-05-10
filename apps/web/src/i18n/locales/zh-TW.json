@@ -364,5 +364,10 @@
     "requests": "請購單",
     "createRequest": "新增",
     "auditLogs": "稽核紀錄"
+  },
+  "notFound": {
+    "body": "找不到您要的頁面，可能已移除或網址有誤。",
+    "path": "找不到 {{path}}",
+    "backHome": "回到儀表板"
   }
 }

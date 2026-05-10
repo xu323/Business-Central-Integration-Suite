@@ -364,5 +364,10 @@
     "requests": "Requests",
     "createRequest": "New",
     "auditLogs": "Audit"
+  },
+  "notFound": {
+    "body": "We couldn't find the page you were looking for. It may have moved or never existed.",
+    "path": "Path: {{path}}",
+    "backHome": "Back to dashboard"
   }
 }

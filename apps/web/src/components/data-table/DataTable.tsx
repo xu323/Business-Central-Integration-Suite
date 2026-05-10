@@ -18,6 +18,36 @@ import { useMemo, useState, type ReactNode } from "react";
 import { useDensity, DENSITY_HEIGHTS } from "@/lib/density";
 import { cn } from "@/lib/cn";
 
+const SELECT_COLUMN: ColumnDef<unknown> = {
+  id: "__select",
+  enableSorting: false,
+  enableHiding: false,
+  size: 36,
+  header: ({ table }) => (
+    <input
+      type="checkbox"
+      aria-label="Select all"
+      className="w-4 h-4 accent-brand-500 cursor-pointer"
+      checked={table.getIsAllPageRowsSelected()}
+      ref={(el) => {
+        if (el) el.indeterminate = table.getIsSomePageRowsSelected();
+      }}
+      onChange={(e) => table.toggleAllPageRowsSelected(!!e.target.checked)}
+      onClick={(e) => e.stopPropagation()}
+    />
+  ),
+  cell: ({ row }) => (
+    <input
+      type="checkbox"
+      aria-label="Select row"
+      className="w-4 h-4 accent-brand-500 cursor-pointer"
+      checked={row.getIsSelected()}
+      onChange={(e) => row.toggleSelected(!!e.target.checked)}
+      onClick={(e) => e.stopPropagation()}
+    />
+  ),
+};
+
 export interface DataTableProps<TData> {
   data: TData[];
   columns: ColumnDef<TData, unknown>[];
@@ -57,9 +87,14 @@ export function DataTable<TData>({
     return raw ? (JSON.parse(raw) as VisibilityState) : {};
   });
 
+  const effectiveColumns = useMemo(
+    () => (bulkActions ? [SELECT_COLUMN as ColumnDef<TData, unknown>, ...columns] : columns),
+    [bulkActions, columns],
+  );
+
   const table = useReactTable({
     data,
-    columns,
+    columns: effectiveColumns,
     state: { sorting, columnFilters, rowSelection, globalFilter, columnVisibility },
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
