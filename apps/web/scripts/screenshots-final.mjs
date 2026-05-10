@@ -2,18 +2,18 @@
  * Phase 5 final screenshot harness — 10 pages × {zh-TW, en, ja} = 30 PNGs.
  *
  * Run:
- *   API:  cd apps/api && uvicorn app.main:app --port 8000
+ *   API:  cd apps/api && uvicorn app.main:app --port 8365
  *   Web:  cd apps/web && npm run dev -- --port 5193
  *   Run:  cd apps/web && WEB_BASE=http://localhost:5193 \
- *           API_BASE=http://127.0.0.1:8000 \
+ *           API_BASE=http://127.0.0.1:8365 \
  *           node scripts/screenshots-final.mjs
  */
 import { chromium } from "playwright";
 import { mkdir } from "node:fs/promises";
 import { resolve } from "node:path";
 
-const BASE = process.env.WEB_BASE ?? "http://localhost:5173";
-const API_BASE = process.env.API_BASE ?? "http://127.0.0.1:8000";
+const BASE = process.env.WEB_BASE ?? "http://localhost:5365";
+const API_BASE = process.env.API_BASE ?? "http://127.0.0.1:8365";
 const OUT_DIR = resolve("..", "..", "outputs", "screenshots", "final");
 const VIEWPORT = { width: 1440, height: 900 };
 const STATIC_NOW = new Date("2026-05-10T10:00:00Z");

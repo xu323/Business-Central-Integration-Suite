@@ -58,4 +58,4 @@ Pop-Location
 Write-Step "All set. Next steps:"
 Write-Host "  Terminal 1 (API):   cd apps/api; .\.venv\Scripts\Activate.ps1; uvicorn app.main:app --reload" -ForegroundColor Yellow
 Write-Host "  Terminal 2 (Web):   cd apps/web; npm run dev" -ForegroundColor Yellow
-Write-Host "  Browser:            http://localhost:5173 (UI)   http://localhost:8000/docs (Swagger)" -ForegroundColor Yellow
+Write-Host "  Browser:            http://localhost:5365 (UI)   http://localhost:8365/docs (Swagger)" -ForegroundColor Yellow

@@ -9,7 +9,7 @@ React + TypeScript + Vite + Tailwind. Microsoft Fluent 2 / Dynamics 365 BC visua
 cd apps/web
 npm install
 
-# develop (proxies /api → http://localhost:8000 by default)
+# develop (proxies /api → http://localhost:8365 by default)
 npm run dev
 
 # typecheck + lint

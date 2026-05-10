@@ -23,13 +23,13 @@ class Settings(BaseSettings):
 
     app_env: Literal["development", "staging", "production"] = "development"
     app_host: str = "0.0.0.0"
-    app_port: int = 8000
+    app_port: int = 8365
     app_log_level: str = "INFO"
     secret_key: str = Field(default="change-me", min_length=8)
 
     database_url: str = "sqlite:///./data/bcsuite.db"
 
-    cors_allow_origins: str = "http://localhost:5173,http://localhost:3000"
+    cors_allow_origins: str = "http://localhost:5365,http://localhost:3000"
 
     high_risk_threshold: float = 100000.0
 

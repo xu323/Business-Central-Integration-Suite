@@ -5,10 +5,10 @@
 #
 #  Usage:
 #     .\scripts\smoke-test.ps1
-#     .\scripts\smoke-test.ps1 -BaseUrl http://localhost:8000
+#     .\scripts\smoke-test.ps1 -BaseUrl http://localhost:8365
 # =============================================================
 param(
-    [string]$BaseUrl = "http://localhost:8000"
+    [string]$BaseUrl = "http://localhost:8365"
 )
 
 $ErrorActionPreference = "Stop"

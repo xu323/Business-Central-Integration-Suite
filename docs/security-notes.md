@@ -27,7 +27,7 @@
 
 ## 4. CORS / Cookies
 
-- `cors_allow_origins` 預設只允許 `http://localhost:5173,http://localhost:3000`；不是 `*`。
+- `cors_allow_origins` 預設只允許 `http://localhost:5365,http://localhost:3000`；不是 `*`。
 - 沒有使用 cookie auth；改用 token 模式（不需要 CSRF）。
 
 ## 5. 錯誤訊息

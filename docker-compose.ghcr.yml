@@ -18,9 +18,9 @@ services:
     container_name: bcsuite-api
     environment:
       APP_ENV: production
-      APP_PORT: 8000
+      APP_PORT: 8365
       DATABASE_URL: postgresql+psycopg2://bcsuite:bcsuite@db:5432/bcsuite
-      CORS_ALLOW_ORIGINS: http://localhost:5173,http://localhost:3000
+      CORS_ALLOW_ORIGINS: http://localhost:5365,http://localhost:3000
       BC_MODE: ${BC_MODE:-mock}
       BC_BASE_URL: ${BC_BASE_URL:-}
       BC_TENANT_ID: ${BC_TENANT_ID:-}
@@ -31,7 +31,7 @@ services:
       HIGH_RISK_THRESHOLD: ${HIGH_RISK_THRESHOLD:-100000}
       SECRET_KEY: ${SECRET_KEY:-change-me-in-production}
     ports:
-      - "8000:8000"
+      - "8365:8365"
     depends_on:
       db:
         condition: service_healthy
@@ -40,7 +40,7 @@ services:
     image: ghcr.io/xu323/business-central-integration-suite/web:${IMAGE_TAG:-latest}
     container_name: bcsuite-web
     ports:
-      - "5173:80"
+      - "5365:80"
     depends_on:
       - api
 

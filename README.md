@@ -44,13 +44,13 @@
 
 ```
 ┌──────────────────────────────────────────────────────────────────┐
-│                  React + Tailwind Dashboard (5173)               │
+│                  React + Tailwind Dashboard (5365)               │
 │   Pages: Dashboard / Requests / Detail / Create / Audit Logs     │
 └────────────────────────┬─────────────────────────────────────────┘
                          │ JSON over HTTP
                          ▼
 ┌──────────────────────────────────────────────────────────────────┐
-│            FastAPI + SQLAlchemy + Pydantic v2 (8000)             │
+│            FastAPI + SQLAlchemy + Pydantic v2 (8365)             │
 │   Routers: purchase_requests / audit_logs / dashboard            │
 │   Audit  : every state change → AuditLog table                   │
 └──────┬──────────────────────────────────────────┬────────────────┘
@@ -110,8 +110,8 @@ cd apps\web
 npm run dev
 
 # 4. 開瀏覽器
-#   - http://localhost:5173/        前端
-#   - http://localhost:8000/docs    Swagger
+#   - http://localhost:5365/        前端
+#   - http://localhost:8365/docs    Swagger
 ```
 
 或直接用 Docker：
@@ -124,7 +124,7 @@ docker compose up --build
 
 ## 六、Demo 流程（5 分鐘走過一輪）
 
-1. 打開 `http://localhost:5173/`，Dashboard 已有 4 筆 seed data。
+1. 打開 `http://localhost:5365/`，Dashboard 已有 4 筆 seed data。
 2. 點 `➕ New Request`，建立一筆金額 250,000 的請購單。
 3. 系統自動標記 **High-Risk**（門檻 100,000，由 `HIGH_RISK_THRESHOLD` 控制）。
 4. 進入詳情頁，按 **Submit** → **Approve** → **Sync to Business Central**。

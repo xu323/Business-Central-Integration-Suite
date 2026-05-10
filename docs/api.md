@@ -1,6 +1,6 @@
 # REST API 規格
 
-> 所有端點都在 `http://localhost:8000`（dev）或對應部署位址；OpenAPI 互動式文件在 `/docs`，OpenAPI JSON 在 `/openapi.json`。
+> 所有端點都在 `http://localhost:8365`（dev）或對應部署位址；OpenAPI 互動式文件在 `/docs`，OpenAPI JSON 在 `/openapi.json`。
 
 ## 1. Health
 

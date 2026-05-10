@@ -11,7 +11,7 @@
 
 ## 2. 五分鐘 Demo 流程
 
-1. 打開 `http://localhost:5173/`，**Dashboard**：Seed data 4 筆，分別是 Draft / Submitted / Approved / Synced。
+1. 打開 `http://localhost:5365/`，**Dashboard**：Seed data 4 筆，分別是 Draft / Submitted / Approved / Synced。
 2. 進入 **Purchase Requests** 列表 → 點 **➕ New Request**：建立一筆金額 250,000 的請購單，會自動標記 `high_risk = true`（門檻 100,000）。
 3. 詳情頁右側 Workflow Actions：**Submit → Approve → Sync to Business Central**；狀態 badge 會跟著變色（灰 → 黃 → 綠 → 藍）。
 4. **Audit Logs** 頁：每筆狀態變更都寫入 `audit_logs` 表，含 `actor / action / sync_status / error_message`。Sync 成功會看到 mock 的 `PO-MOCK-PR…` ID。

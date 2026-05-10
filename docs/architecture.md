@@ -9,14 +9,14 @@
                                     │ HTTPS / JSON
                                     ▼
        ┌────────────────────────────────────────────────────────┐
-       │   React + TypeScript + Tailwind  ―  Vite (port 5173)   │
+       │   React + TypeScript + Tailwind  ―  Vite (port 5365)   │
        │   - DashboardPage / RequestListPage / DetailPage / ... │
        │   - 統一 fetch 入口：src/lib/api.ts                     │
        └─────────────────────┬──────────────────────────────────┘
                              │ /api/...
                              ▼
        ┌────────────────────────────────────────────────────────┐
-       │   FastAPI + SQLAlchemy 2.0 + Pydantic v2 (port 8000)   │
+       │   FastAPI + SQLAlchemy 2.0 + Pydantic v2 (port 8365)   │
        │   ┌──────────────────────────────────────────────────┐ │
        │   │  Routers                                         │ │
        │   │   • purchase_requests.py  (CRUD + state machine) │ │

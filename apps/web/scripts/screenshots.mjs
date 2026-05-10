@@ -2,7 +2,7 @@
  * Playwright screenshot harness.
  *
  * Usage:
- *   API:  cd apps/api && uvicorn app.main:app --port 8000
+ *   API:  cd apps/api && uvicorn app.main:app --port 8365
  *   Web:  cd apps/web && npm run dev
  *   Run:  cd apps/web && node scripts/screenshots.mjs <phase>   (default: phase2)
  *
@@ -13,8 +13,8 @@ import { mkdir } from "node:fs/promises";
 import { resolve } from "node:path";
 
 const PHASE = process.argv[2] ?? "phase2";
-const BASE = process.env.WEB_BASE ?? "http://localhost:5173";
-const API_BASE = process.env.API_BASE ?? "http://127.0.0.1:8000";
+const BASE = process.env.WEB_BASE ?? "http://localhost:5365";
+const API_BASE = process.env.API_BASE ?? "http://127.0.0.1:8365";
 const OUT_DIR = resolve("..", "..", "outputs", "screenshots", PHASE);
 const VIEWPORT = { width: 1440, height: 900 };
 
